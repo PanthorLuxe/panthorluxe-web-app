@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Apartamento de Lujo en Salamanca",
+    "city": "Madrid",
+    "price": 2800,
+    "status": "disponible",
+    "img": "/img/alquiler1/1.jpg"
+  },
+  {
+    "title": "Piso Reformado Cerca del Retiro",
+    "city": "Madrid",
+    "price": 1950,
+    "status": "proximo",
+    "img": "/img/alquiler2/1.jpg"
+  },
+  {
+    "title": "Estudio con Encanto en el Centro",
+    "city": "Jaén",
+    "price": 750,
+    "status": "disponible",
+    "img": "/img/alquiler3/1.jpg"
+  },
+  {
+    "title": "Dúplex con Terraza en Chamberí",
+    "city": "Madrid",
+    "price": 3200,
+    "status": "alquilado",
+    "img": "/img/alquiler4/1.jpg"
+  }
+]

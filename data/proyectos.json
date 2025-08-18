@@ -1,0 +1,21 @@
+{
+  "terminados": [
+    {
+      "title": "Rehabilitación Integral en Lavapiés",
+      "desc": "Conversión de una antigua corrala en 6 apartamentos modernos, manteniendo la fachada y elementos históricos protegidos.",
+      "img": "/img/proyecto-madrid1/1.jpg"
+    }
+  ],
+  "proceso": [
+    {
+      "title": "Apartamentos Turísticos 'Mirador de la Catedral'",
+      "desc": "Adquisición y demolición de un edificio en estado de ruina para la construcción de un complejo de apartamentos turísticos de alta gama a 50 metros de la Catedral de Jaén.",
+      "img": "/img/proyecto-jaen1/1.jpg"
+    },
+    {
+      "title": "Puesta en valor de local comercial",
+      "desc": "Reforma completa para transformar un bajo comercial en un espacio diáfano y polivalente para alquiler de oficinas o comercios.",
+      "img": "/img/proyecto-madrid2/1.jpg"
+    }
+  ]
+}

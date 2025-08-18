@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Galería — Panthor Luxe</title>
+  <meta name="description" content="Galería visual de nuestros proyectos e inmuebles. Interiores y exteriores en Madrid y Jaén." />
+  <link rel="canonical" href="https://www.panthorluxe.com/galeria.html" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.panthorluxe.com/galeria.html">
+  <meta property="og:title" content="Galería Visual — Panthor Luxe">
+  <meta property="og:description" content="Explora la galería de nuestros proyectos e inmuebles. Interiores y exteriores en Madrid y Jaén.">
+  <meta property="og:image" content="https://www.panthorluxe.com/img/social-share.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://www.panthorluxe.com/galeria.html">
+  <meta property="twitter:title" content="Galería Visual — Panthor Luxe">
+  <meta property="twitter:description" content="Explora la galería de nuestros proyectos e inmuebles. Interiores y exteriores en Madrid y Jaén.">
+  <meta property="twitter:image" content="https://www.panthorluxe.com/img/social-share.jpg">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Galería Visual — Panthor Luxe",
+    "description": "Galería visual de nuestros proyectos e inmuebles. Interiores y exteriores en Madrid y Jaén.",
+    "url": "https://www.panthorluxe.com/galeria.html",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Panthor Luxe",
+      "url": "https://www.panthorluxe.com/"
+    }
+  }
+  </script>
+</head>
+<body>
+<header class="header" role="banner">
+  <a class="brand" href="index.html" aria-label="Panthor Luxe — Inicio">
+    <span class="brand__name">Panthor Luxe</span>
+    <span class="badge-works" title="Sitio en obras">
+      <svg class="excavator" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM3 5h7l3 5h4.5a1.5 1.5 0 0 1 0 3H14l-3 4H4a3 3 0 0 1-3-3V7a2 2 0 0 1 2-2Z"/>
+      </svg>
+      <span class="label">EN OBRAS</span>
+    </span>
+  </a>
+  <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainnav">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="mainnav" class="nav" role="navigation">
+    <a href="index.html">Inicio</a>
+    <a href="alquileres.html">Alquileres</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="galeria.html" class="is-active">Galería</a>
+    <a href="privacidad.html" class="link-muted">Privacidad</a>
+    <a href="formulario.html" class="btn">Contacto</a>
+  </nav>
+</header>
+<main class="section container">
+  <a class="btn back-home" href="index.html">← Volver a inicio</a>
+  <header class="section-head">
+    <h1>Galería</h1>
+    <p>Inserta tus fotos en <code>/img/</code> y enlázalas aquí si quieres un carrusel.</p>
+  </header>
+
+  <div id="galeriaGrid" class="cards"></div>
+</main>
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <p>© 2025 Panthor Luxe S.L.U. · Madrid · Jaén</p>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
