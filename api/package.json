@@ -1,14 +1,8 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "Azure Function to handle Panthor Luxe contact form.",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "func start",
-    "test": "echo \"No tests yet...\""
-  },
+  "description": "Azure Functions for Panthor Luxe contact form.",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0"
-  },
-  "devDependencies": {}
+  }
 }
