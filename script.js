@@ -1,22 +1,21 @@
 // =================================================================
-// Menú móvil (Hamburguesa)
+// Menú móvil (Hamburguesa) - VERSIÓN CORREGIDA
 // =================================================================
 const burger = document.querySelector('.hamburger');
-const nav = document.getElementById('mainnav');
-
-if (burger && nav) {
+if (burger) {
   burger.addEventListener('click', () => {
-    // Usamos el contenedor del menú que creamos en el HTML
     const menuContainer = burger.closest('.header__menu-container');
-    const isOpen = menuContainer.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', isOpen);
+    if (menuContainer) {
+      const isOpen = menuContainer.classList.toggle('menu-open');
+      burger.setAttribute('aria-expanded', isOpen);
+    }
   });
 }
 
 // =================================================================
 // Funciones de Utilidad
 // =================================================================
-function euro(v){ return Number(v).toLocaleString('es-ES'); }
+function euro(v){ return Number(v).toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
 function createEl(html){ const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
 function withImgFallback(src, alt){
   const img = new Image();
@@ -35,7 +34,7 @@ function withImgFallback(src, alt){
   const grid = document.getElementById('rentalsGrid');
   if (!grid) return;
   let data = [];
-  try { const res = await fetch('data/alquileres.json'); data = await res.json(); } catch(e) { console.error(e); data = []; }
+  try { const res = await fetch('data/alquileres.json'); data = await res.json(); } catch(e) { console.error('Error cargando alquileres:', e); data = []; }
   const form = document.getElementById('searchForm');
   const pagination = document.getElementById('pagination');
   const PAGE_SIZE = 9;
@@ -62,7 +61,7 @@ function withImgFallback(src, alt){
     slice.forEach(r => {
       const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
       const badgeText = r.status==='disponible' ? 'Disponible' : (r.status==='proximo' ? 'Próximo' : 'Alquilado');
-      const card = createEl(`<article class="card rental"><div class="media"></div><div class="card__body"><h3>${r.title} – ${r.city}</h3><p>${euro(r.price)} €/mes</p><span class="badge ${badgeClass}">${badgeText}</span></div></article>`);
+      const card = createEl(`<article class="card rental"><div class="media"></div><div class="card__body"><h3>${r.title} – ${r.city}</h3><p>${euro(r.price)} /mes</p><span class="badge ${badgeClass}">${badgeText}</span></div></article>`);
       card.querySelector('.media').appendChild(withImgFallback(r.img, `${r.title} – ${r.city}`));
       grid.appendChild(card);
     });
@@ -95,7 +94,7 @@ function withImgFallback(src, alt){
   const listTerm = document.getElementById('proyectosTerminados');
   const listProc = document.getElementById('proyectosProceso');
   let data = { terminados: [], proceso: [] };
-  try { const res = await fetch('data/proyectos.json'); data = await res.json(); } catch(e) { console.error(e) }
+  try { const res = await fetch('data/proyectos.json'); data = await res.json(); } catch(e) { console.error('Error cargando proyectos.json:', e) }
   function renderList(container, items){
     container.innerHTML = '';
     items.forEach(p => {
@@ -169,7 +168,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// Lógica del Hero Carousel (NUEVO)
+// Lógica del Hero Carousel
 // =================================================================
 (function(){
   const carousel = document.querySelector('.hero-carousel');
@@ -187,4 +186,38 @@ function withImgFallback(src, alt){
       slides[currentSlide].classList.add('is-active');
     }, 5000);
   }
+})();
+
+// =================================================================
+// LÓGICA DE LA NUEVA PÁGINA DE VENTAS
+// =================================================================
+(async function(){
+  const grid = document.getElementById('salesGrid');
+  if (!grid) return;
+
+  let salesData = [];
+  try {
+    const res = await fetch('data/ventas.json');
+    salesData = await res.json();
+  } catch(error) {
+    console.error('Error al cargar ventas.json:', error);
+  }
+  
+  function renderSales(){
+    grid.innerHTML = '';
+    salesData.forEach(p => {
+      const card = createEl(`<article class="card">
+        <div class="media"></div>
+        <div class="card__body">
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+          <p style="font-weight: bold; font-size: 1.1em; color: var(--color-primary-dark);">${euro(p.price)}</p>
+        </div>
+      </article>`);
+      card.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
+      grid.appendChild(card);
+    });
+  }
+  
+  renderSales();
 })();
