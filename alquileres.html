@@ -6,18 +6,15 @@
   <link rel="canonical" href="https://www.panthorluxe.com/alquileres.html" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.panthorluxe.com/alquileres.html">
   <meta property="og:title" content="Catálogo de Alquileres — Panthor Luxe">
   <meta property="og:description" content="Explora nuestro catálogo de alquileres disponibles, próximos y gestionados en Madrid y Jaén.">
   <meta property="og:image" content="https://www.panthorluxe.com/img/social-share.jpg">
   <meta property="twitter:card" content="summary_large_image">
-
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css" />
   <link rel="manifest" href="manifest.webmanifest">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -25,30 +22,32 @@
     "name": "Catálogo de Alquileres — Panthor Luxe",
     "description": "Catálogo de alquileres disponibles, próximos y alquilados en Madrid y Jaén, gestionados por Panthor Luxe.",
     "url": "https://www.panthorluxe.com/alquileres.html",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Panthor Luxe",
-      "url": "https://www.panthorluxe.com/"
-    }
+    "isPartOf": {"@type": "WebSite", "name": "Panthor Luxe", "url": "https://www.panthorluxe.com/"}
   }
   </script>
 </head>
 <body>
 <header class="header" role="banner">
-  <a class="brand" href="index.html" aria-label="Panthor Luxe — Inicio">
-    <span class="brand__name">Panthor Luxe</span>
-  </a>
-  <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainnav">
-    <span></span><span></span><span></span>
-  </button>
-  <nav id="mainnav" class="nav" role="navigation">
-    <a href="index.html">Inicio</a>
-    <a href="alquileres.html" class="is-active">Alquileres</a>
-    <a href="proyectos.html">Proyectos</a>
-    <a href="galeria.html">Galería</a>
-    <a href="privacidad.html" class="link-muted">Privacidad</a>
-    <a href="formulario.html" class="btn">Contacto</a>
-  </nav>
+  <a class="brand" href="index.html" aria-label="Panthor Luxe — Inicio">
+    <span class="brand__name">Panthor Luxe</span>
+  </a>
+  <div class="header__menu-container">
+    <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainnav">
+      <svg class="hamburger__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+    <nav id="mainnav" class="nav" role="navigation">
+      <a href="index.html">Inicio</a>
+      <a href="alquileres.html" class="is-active">Alquileres</a>
+      <a href="proyectos.html">Proyectos</a>
+      <a href="galeria.html">Galería</a>
+      <a href="privacidad.html" class="link-muted">Privacidad</a>
+      <a href="formulario.html" class="btn">Contacto</a>
+    </nav>
+  </div>
 </header>
 <main class="section container">
   <a class="btn back-home" href="index.html">← Volver a inicio</a>
@@ -56,7 +55,6 @@
     <h1>Alquileres</h1>
     <p class="lead">Filtra por ciudad, estado o precio.</p>
   </header>
-
   <form id="searchForm" class="form">
     <div class="grid grid--2">
       <div>
@@ -93,7 +91,6 @@
     </div>
     <button class="btn" type="submit">Buscar</button>
   </form>
-
   <div id="rentalsGrid" class="cards"></div>
   <div id="pagination" class="chips"></div>
 </main>

@@ -1,15 +1,15 @@
 // =================================================================
 // Menú móvil (Hamburguesa)
-// =================================================================
 const burger = document.querySelector('.hamburger');
 const nav = document.getElementById('mainnav');
-if (burger && nav){
-  burger.addEventListener('click', ()=>{
-    // Alterna la clase 'open' en el menú de navegación
-    const open = nav.classList.toggle('open');
-    // Actualiza el atributo aria-expanded para accesibilidad
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
+
+if (burger && nav) {
+  burger.addEventListener('click', () => {
+    // Ahora añadimos/quitamos la clase 'open' al contenedor del menú
+    const menuContainer = burger.parentElement;
+    const isOpen = menuContainer.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded', isOpen);
+  });
 }
 
 // =================================================================

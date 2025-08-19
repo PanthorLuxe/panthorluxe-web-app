@@ -35,26 +35,44 @@
 html,body{scroll-behavior:smooth}
 body{margin:0;font-family:var(--font-family-base);color:var(--color-text);background:var(--color-bg);line-height:1.55}
 
-/* =========== Header =========== */
-.header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--color-border);background:var(--color-bg-header);backdrop-filter:saturate(180%) blur(8px)}
+/* =========== Header (VERSIÓN DEFINITIVA CON HAMBURGUESA PERMANENTE) =========== */
+.header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--color-border);background:var(--color-bg-header);backdrop-filter:saturate(180%) blur(8px);}
+
 .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
 .brand__name{font-weight:800;letter-spacing:.3px;font-size:18px}
-.badge-works{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border:1px dashed var(--color-primary);border-radius:999px;background:var(--color-primary-light)}
-.badge-works .excavator{width:16px;height:16px;fill:var(--color-primary-dark)}
-.badge-works .label{font-size:12px;color:var(--color-primary-dark);font-weight:800}
-.nav{display:flex;gap:16px;align-items:center}
+
+/* El nuevo contenedor que sirve de ANCLA para el menú */
+.header__menu-container {
+  position: relative;
+}
+
+/* El menú ahora se posiciona correctamente relativo al contenedor */
+.nav{position:absolute;top:calc(100% + 8px); /* Debajo del botón, con 8px de espacio */ right:0;background:var(--color-bg);border:1px solid var(--color-border);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:12px;display:none;flex-direction:column;min-width:220px;z-index: 101;}
+
+/* Hacemos visible el menú cuando el CONTENEDOR tiene la clase 'menu-open' */
+.header__menu-container.menu-open .nav {
+  display: flex;
+}
 .nav a{color:var(--color-text-header);text-decoration:none;padding:8px 10px;border-radius:8px}
 .nav a.is-active{background:var(--color-bg-active);font-weight:700}
+
+/* Estilos de la hamburguesa mejorados */
+.hamburger{display:flex; align-items:center; justify-content:center; background:transparent;border:0;padding:8px; /* <-- Padding para hacer el área de clic más grande */ cursor:pointer; border-radius: 8px;}
+.hamburger:hover { background: var(--color-bg-active); }
+.hamburger__icon { width: 24px; height: 24px; color: var(--color-primary); /* <-- Color dorado */ }
+.hamburger__icon line { transition: all 0.3s ease-in-out; } /* <-- Animación suave para las líneas */
+
+/* Animación del icono a una 'X' cuando el CONTENEDOR tiene la clase 'menu-open' */
+.header__menu-container.menu-open .hamburger__icon line:nth-child(1) { transform: translateY(6px) rotate(45deg); transform-origin: center; }
+.header__menu-container.menu-open .hamburger__icon line:nth-child(2) { opacity: 0; }
+.header__menu-container.menu-open .hamburger__icon line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); transform-origin: center; }
+
+
+/* Botones (sin cambios) */
 .link-muted{opacity:.8}
 .btn{display:inline-block;padding:10px 16px;background:var(--color-primary);color:var(--color-bg-dark);border-radius:12px;font-weight:700;text-decoration:none;border:1.5px solid var(--color-primary)}
 .btn--outline{background:transparent;color:var(--color-bg-dark)}
-.hamburger{display:none;background:transparent;border:0;width:40px;height:34px;padding:0}
-.hamburger span{display:block;height:3px;background:var(--color-bg-dark);margin:6px 0;border-radius:2px}
-@media (max-width:860px){
-  .hamburger{display:block}
-  .nav{position:absolute;top:60px;right:12px;background:var(--color-bg);border:1px solid var(--color-border);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:12px;display:none;flex-direction:column;min-width:220px}
-  .nav.open{display:flex}
-}
+
 
 /* =========== Hero =========== */
 .hero{display:grid;place-items:center;min-height:56vh;text-align:center;background:
@@ -97,7 +115,7 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 /* =========== Formularios =========== */
 .form{background:var(--color-bg);border:1px solid var(--color-border);border-radius:14px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.04)}
 .form input,.form select,.form textarea{width:100%;padding:12px;border:1px solid var(--color-border-input);border-radius:10px;margin:6px 0;font-size:15px}
-.consent{display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:16px} /* <-- MODIFICADO */
+.consent{display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:16px}
 .consent input[type="checkbox"] {
   margin: 0;
   flex-shrink: 0;
@@ -154,8 +172,8 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 }
 .section--cta {
   background: var(--color-bg-subtle);
-  display: grid; /* <-- MODIFICADO */
-  place-items: center; /* <-- MODIFICADO */
+  display: grid;
+  place-items: center;
 }
 
 @media (max-width: 900px) {
