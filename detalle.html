@@ -2,10 +2,12 @@
 <html lang="es">
 <head>
   <title>Detalle de Propiedad — Panthor Luxe</title>
-  <meta name="robots" content="noindex" />
-  <meta charset="utf-8" />
+  <meta name="robots" content="noindex" />   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  
+  <link rel="icon" href="/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/img/logo.png">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -32,13 +34,32 @@
     </nav>
   </div>
 </header>
-<main class="section container">
-  <a class="btn back-home" href="javascript:history.back()">← Volver</a>
-  <header class="section-head">
-    <h1>Detalle de Propiedad</h1>
-    <p>Esta página mostrará la descripción completa y la galería de fotos. ¡En construcción!</p>
-  </header>
-</main>
+<main id="detailPage" class="section container">
+  
+  <a class="btn back-home" href="javascript:history.back()">← Volver</a>
+
+  <div class="property-detail">
+    
+    <div class="detail-gallery">
+      <div class="main-image-container">
+        <img id="mainImage" src="" alt="Imagen principal de la propiedad" />
+        <button id="prevBtn" class="gallery-arrow prev">&lt;</button>
+        <button id="nextBtn" class="gallery-arrow next">&gt;</button>
+      </div>
+      <div id="thumbnails" class="thumbnails-container">
+        </div>
+    </div>
+
+    <div class="property-info">
+      <h1 id="propertyTitle">Cargando título...</h1>
+      <p id="propertyPrice" class="price"></p>
+      <div id="propertyLongDesc">
+        <p>Cargando descripción...</p>
+      </div>
+    </div>
+
+  </div>
+  </main>
 <footer class="footer" role="contentinfo">
   <div class="container">
     <p>© 2025 Panthor Luxe S.L.U. · Madrid · Jaén</p>

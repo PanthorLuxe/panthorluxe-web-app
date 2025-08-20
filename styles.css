@@ -8,20 +8,18 @@
   --color-text-header: #222;
   --color-text-subtle: #444;
   --color-text-inverted: #bfbfbf;
-  --color-bg: #ffffff;
+  --color-bg: #fcfcfc; /* <-- CAMBIO A BLANCO ROTO */
   --color-bg-dark: #111;
-  --color-bg-header: rgba(255, 255, 255, .96);
-  --color-bg-active: #f6f6f6;
-  --color-bg-subtle: #fafafa;
+  --color-bg-header: rgba(252, 252, 252, .96); /* <-- Adaptado al nuevo fondo */
+  --color-bg-active: #f0f0f0; /* <-- Tono más oscuro para contraste */
+  --color-bg-subtle: #f7f7f7; /* <-- Tono más oscuro para contraste */
   --color-border: #eee;
   --color-border-input: #ddd;
-
   /* Colores de Badges */
   --color-badge-ok-bg: #e6f7ed;
   --color-badge-ok-text: #0a7c3b;
   --color-badge-off-bg: #f2f2f2;
   --color-badge-off-text: #666;
-
   /* Tipografía */
   --font-family-base: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
 }
@@ -49,8 +47,7 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 .header__menu-container.menu-open .hamburger__icon line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); transform-origin: center; }
 .link-muted{opacity:.8}
 .btn{display:inline-block;padding:10px 16px;background:var(--color-primary);color:var(--color-bg-dark);border-radius:12px;font-weight:700;text-decoration:none;border:1.5px solid var(--color-primary)}
-.btn--outline{background:transparent;color:var(--color-bg-dark)}
-
+.btn--outline{background:transparent;color:var(--color-text)}
 
 /* =========== Hero Carousel (NUEVO) =========== */
 .hero-carousel {
@@ -108,18 +105,19 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 /* =========== Layout =========== */
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
 .section{padding:48px 0}
-.section-head{text-align:center;margin:0 0 18px}
+.section-head{text-align:center;margin:0 0 24px} /* Aumentado margen inferior */
+.section-head h1, .section-head h2 { margin-bottom: 12px; }
 .section-head p{max-width:700px;margin:0 auto}
 
 /* =========== Grid/cards =========== */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .grid--2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:900px){.grid{grid-template-columns:1fr}.grid--2{grid-template-columns:1fr}}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px} /* Aumentado tamaño mínimo y gap */
 #rentalsGrid{margin-top:18px}
 .card{border:1px solid var(--color-border);border-radius:12px;overflow:hidden;background:var(--color-bg);box-shadow:0 2px 6px rgba(0,0,0,.04)}
 .card img{width:100%;height:200px;object-fit:cover;display:block}
-.card__body{padding:14px 16px}
+.card__body{padding:16px 20px}
 .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
 .badge.ok{background:var(--color-badge-ok-bg);color:var(--color-badge-ok-text)}
 .badge.soon{background:var(--color-primary-light);color:var(--color-primary-dark)}
@@ -160,4 +158,122 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 /* =========== Utilidades =========== */
 .hidden, .is-hidden {display:none !important}
 .sr-only {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;}
+/* =========== NUEVOS ESTILOS PARA LA PÁGINA DE DETALLE =========== */
+.property-detail {
+  display: grid;
+  grid-template-columns: 1fr; /* Una columna en móvil */
+  gap: 32px;
+  margin-top: 24px;
+}
+
+/* En pantallas más grandes, dos columnas */
+@media (min-width: 900px) {
+  .property-detail {
+    grid-template-columns: 3fr 2fr; /* La galería ocupa más espacio */
+  }
+}
+
+.detail-gallery {
+  width: 100%;
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 66.66%; /* Proporción 3:2 */
+  background-color: var(--color-bg-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.main-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.main-image-container:hover .gallery-arrow {
+  opacity: 1;
+}
+
+.gallery-arrow.prev {
+  left: 12px;
+}
+
+.gallery-arrow.next {
+  right: 12px;
+}
+
+.thumbnails-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.thumbnail {
+  width: 100%;
+  padding-top: 100%; /* Imágenes cuadradas */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.thumbnail.is-active {
+  border-color: var(--color-primary);
+}
+
+.property-info h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.property-info .price {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--color-primary-dark);
+  margin-bottom: 24px;
+}
+
+.property-info #propertyLongDesc p {
+  line-height: 1.6;
+  color: var(--color-text-subtle);
+}
+/* Estilo para el enlace de las tarjetas de propiedad */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
 /* FIN DEL CÓDIGO COMPLETO Y DEFINITIVO DE styles.css */

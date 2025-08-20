@@ -1,30 +1,28 @@
 [
   {
-    "title": "Apartamento de Lujo en Salamanca",
+    "id": "piso-moratalaz",
+    "title": "Moderno Piso en Moratalaz, Madrid",
     "city": "Madrid",
-    "price": 2800,
-    "status": "disponible",
-    "img": "/img/alquiler1/1.jpg"
+    "price": 1600,
+    "status": "alquilado",
+    "img": "/img/alquiler1/1.jpg",
+    "desc": "Luminoso y reformado piso en la Calle Hacienda de Pavones. Ideal para familias o profesionales, perfectamente comunicado y con todas las comodidades.",
+    "long_desc": "Descubre este excepcional piso situado en el consolidado barrio de Moratalaz, en la Calle Hacienda de Pavones, 53. Esta vivienda, ahora alquilada, representa el estándar de calidad y confort de Panthor Luxe. Con una distribución inteligente y acabados modernos, ofrece un ambiente luminoso y acogedor. Su ubicación estratégica, con excelentes conexiones de transporte público y accesos a las principales vías de Madrid, junto con la proximidad a zonas verdes, colegios y comercios, lo convierte en una opción ideal para la vida urbana sin renunciar a la tranquilidad.",
+    "gallery_images": [
+      "/img/alquiler1/2.jpg",
+      "/img/alquiler1/3.jpg",
+      "/img/alquiler1/4.jpg"
+    ]
   },
   {
-    "title": "Piso Reformado Cerca del Retiro",
-    "city": "Madrid",
-    "price": 1950,
-    "status": "proximo",
-    "img": "/img/alquiler2/1.jpg"
-  },
-  {
+    "id": "estudio-jaen",
     "title": "Estudio con Encanto en el Centro",
     "city": "Jaén",
     "price": 750,
     "status": "disponible",
-    "img": "/img/alquiler3/1.jpg"
-  },
-  {
-    "title": "Dúplex con Terraza en Chamberí",
-    "city": "Madrid",
-    "price": 3200,
-    "status": "alquilado",
-    "img": "/img/alquiler4/1.jpg"
+    "img": "/img/alquiler3/1.jpg",
+    "desc": "Acogedor estudio en el corazón de Jaén, perfecto para una persona o pareja. Completamente amueblado y listo para entrar a vivir.",
+    "long_desc": "Vive la esencia de Jaén en este encantador estudio situado en una de las zonas más céntricas y con más vida de la ciudad. Este espacio, perfectamente optimizado, cuenta con todo lo necesario para una vida cómoda y funcional. Ideal para profesionales o estudiantes que buscan la comodidad de tenerlo todo a un paso: tiendas, restaurantes y patrimonio cultural. Un refugio urbano con carácter.",
+    "gallery_images": []
   }
 ]

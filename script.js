@@ -1,5 +1,5 @@
 // =================================================================
-// Menú móvil (Hamburguesa) - VERSIÓN CORREGIDA
+// Menú móvil (Hamburguesa)
 // =================================================================
 const burger = document.querySelector('.hamburger');
 if (burger) {
@@ -61,9 +61,17 @@ function withImgFallback(src, alt){
     slice.forEach(r => {
       const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
       const badgeText = r.status==='disponible' ? 'Disponible' : (r.status==='proximo' ? 'Próximo' : 'Alquilado');
-      const card = createEl(`<article class="card rental"><div class="media"></div><div class="card__body"><h3>${r.title} – ${r.city}</h3><p>${euro(r.price)} /mes</p><span class="badge ${badgeClass}">${badgeText}</span></div></article>`);
-      card.querySelector('.media').appendChild(withImgFallback(r.img, `${r.title} – ${r.city}`));
-      grid.appendChild(card);
+      const cardHTML = `<article class="card rental">
+        <div class="media"></div>
+        <div class="card__body">
+          <h3>${r.title}</h3>
+          <p>${euro(r.price)} /mes</p>
+          <span class="badge ${badgeClass}">${badgeText}</span>
+        </div>
+      </article>`;
+      const cardLink = createEl(`<a href="detalle.html?id=${r.id}" class="card-link">${cardHTML}</a>`);
+      cardLink.querySelector('.media').appendChild(withImgFallback(r.img, r.title));
+      grid.appendChild(cardLink);
     });
     const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
     pagination.innerHTML = '';
@@ -98,9 +106,16 @@ function withImgFallback(src, alt){
   function renderList(container, items){
     container.innerHTML = '';
     items.forEach(p => {
-      const card = createEl(`<article class="card"><div class="media"></div><div class="card__body"><h3>${p.title}</h3><p>${p.desc}</p></div></article>`);
-      card.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
-      container.appendChild(card);
+      const cardHTML = `<article class="card">
+        <div class="media"></div>
+        <div class="card__body">
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+        </div>
+      </article>`;
+      const cardLink = createEl(`<a href="detalle.html?id=${p.id}" class="card-link">${cardHTML}</a>`);
+      cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
+      container.appendChild(cardLink);
     });
   }
   renderList(listTerm, data.terminados);
@@ -111,6 +126,33 @@ function withImgFallback(src, alt){
     const tab = b.dataset.tab;
     document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('is-hidden', p.dataset.panel !== tab));
   }));
+})();
+
+// =================================================================
+// Lógica de la página de Ventas
+// =================================================================
+(async function(){
+  const grid = document.getElementById('salesGrid');
+  if (!grid) return;
+  let salesData = [];
+  try { const res = await fetch('data/ventas.json'); salesData = await res.json(); } catch(error) { console.error('Error al cargar ventas.json:', error); }
+  function renderSales(){
+    grid.innerHTML = '';
+    salesData.forEach(p => {
+      const cardHTML = `<article class="card">
+        <div class="media"></div>
+        <div class="card__body">
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+          <p style="font-weight: bold; font-size: 1.1em; color: var(--color-primary-dark);">${euro(p.price)}</p>
+        </div>
+      </article>`;
+      const cardLink = createEl(`<a href="detalle.html?id=${p.id}" class="card-link">${cardHTML}</a>`);
+      cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
+      grid.appendChild(cardLink);
+    });
+  }
+  renderSales();
 })();
 
 // =================================================================
@@ -173,13 +215,10 @@ function withImgFallback(src, alt){
 (function(){
   const carousel = document.querySelector('.hero-carousel');
   if (!carousel) return;
-  
   const slides = carousel.querySelectorAll('.carousel-slide');
   let currentSlide = 0;
-  
   if (slides.length > 0) {
     slides[currentSlide].classList.add('is-active');
-
     setInterval(() => {
       slides[currentSlide].classList.remove('is-active');
       currentSlide = (currentSlide + 1) % slides.length;
@@ -189,35 +228,98 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA NUEVA PÁGINA DE VENTAS
+// LÓGICA DE LA NUEVA PÁGINA DE DETALLE
 // =================================================================
-(async function(){
-  const grid = document.getElementById('salesGrid');
-  if (!grid) return;
+(async function() {
+  const isDetailPage = document.getElementById('detailPage');
+  if (!isDetailPage) return;
 
-  let salesData = [];
-  try {
-    const res = await fetch('data/ventas.json');
-    salesData = await res.json();
-  } catch(error) {
-    console.error('Error al cargar ventas.json:', error);
+  const params = new URLSearchParams(window.location.search);
+  const propertyId = params.get('id');
+  
+  const propertyDetailDiv = document.querySelector('.property-detail');
+
+  if (!propertyId) {
+    propertyDetailDiv.innerHTML = '<h1>Error: No se ha especificado una propiedad.</h1>';
+    return;
+  }
+
+  async function fetchAllData() {
+    try {
+      const [rentalsRes, projectsRes, salesRes] = await Promise.all([
+        fetch('/data/alquileres.json'),
+        fetch('/data/proyectos.json'),
+        fetch('/data/ventas.json')
+      ]);
+      const rentals = await rentalsRes.json();
+      const projectsData = await projectsRes.json();
+      const sales = await salesRes.json();
+      const allProjects = [...projectsData.terminados, ...projectsData.proceso];
+      return [...rentals, ...allProjects, ...sales];
+    } catch(e) {
+      console.error("Error al cargar los datos de las propiedades:", e);
+      return [];
+    }
+  }
+
+  const allData = await fetchAllData();
+  const property = allData.find(item => item.id === propertyId);
+
+  if (!property) {
+    propertyDetailDiv.innerHTML = `<h1>Error: Propiedad con ID "${propertyId}" no encontrada.</h1>`;
+    return;
   }
   
-  function renderSales(){
-    grid.innerHTML = '';
-    salesData.forEach(p => {
-      const card = createEl(`<article class="card">
-        <div class="media"></div>
-        <div class="card__body">
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-          <p style="font-weight: bold; font-size: 1.1em; color: var(--color-primary-dark);">${euro(p.price)}</p>
-        </div>
-      </article>`);
-      card.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
-      grid.appendChild(card);
+  document.getElementById('propertyTitle').textContent = property.title;
+  const priceEl = document.getElementById('propertyPrice');
+  if (property.price) {
+    const priceSuffix = property.id.includes('piso') ? ' /mes' : '';
+    priceEl.textContent = euro(property.price) + priceSuffix;
+  } else {
+    priceEl.style.display = 'none';
+  }
+  document.getElementById('propertyLongDesc').innerHTML = `<p>${property.long_desc.replace(/\n/g, '</p><p>')}</p>`;
+  document.title = `${property.title} — Panthor Luxe`;
+
+  const mainImage = document.getElementById('mainImage');
+  const thumbnailsContainer = document.getElementById('thumbnails');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  
+  const galleryImages = [property.img, ...(property.gallery_images || [])];
+  let currentImageIndex = 0;
+
+  function showImage(index) {
+    if(!galleryImages[index]) return;
+    mainImage.style.opacity = 0;
+    setTimeout(() => {
+        mainImage.src = galleryImages[index];
+        mainImage.alt = `${property.title} - imagen ${index + 1}`;
+        mainImage.style.opacity = 1;
+    }, 200);
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+      thumb.classList.toggle('is-active', i === index);
     });
+    currentImageIndex = index;
   }
-  
-  renderSales();
+
+  if (galleryImages.length > 1) { // Solo mostrar galería si hay más de una imagen
+    galleryImages.forEach((src, index) => {
+      const thumb = createEl(`<div class="thumbnail" style="background-image: url('${src}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
+      thumb.addEventListener('click', () => showImage(index));
+      thumbnailsContainer.appendChild(thumb);
+    });
+    prevBtn.addEventListener('click', () => {
+      const newIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+      showImage(newIndex);
+    });
+    nextBtn.addEventListener('click', () => {
+      const newIndex = (currentImageIndex + 1) % galleryImages.length;
+      showImage(newIndex);
+    });
+    showImage(0);
+  } else {
+    mainImage.src = galleryImages[0] || '';
+    document.querySelector('.detail-gallery').classList.add('single-image');
+  }
 })();
