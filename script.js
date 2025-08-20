@@ -159,25 +159,67 @@ function withImgFallback(src, alt){
 // Lógica de la página de Galería
 // =================================================================
 (async function(){
-  const grid = document.getElementById('galeriaGrid');
-  if (!grid) return;
+  const isGalleryPage = document.getElementById('galleryPage');
+  if (!isGalleryPage) return;
+  
+  const mainImage = document.getElementById('galleryMainImage');
+  const caption = document.getElementById('galleryCaption');
+  const thumbnailsContainer = document.getElementById('galleryThumbnails');
+  const prevBtn = document.getElementById('galleryPrevBtn');
+  const nextBtn = document.getElementById('galleryNextBtn');
+  
   let galleryData = [];
-  try { const res = await fetch('data/galeria.json'); galleryData = await res.json(); } catch(error) { console.error('Error al cargar galeria.json:', error); }
+  let currentImageIndex = 0;
+
+  try {
+    const res = await fetch('data/galeria.json');
+    galleryData = await res.json();
+  } catch(error) {
+    console.error('Error al cargar galeria.json:', error);
+  }
 
   if (galleryData.length === 0) {
-    grid.appendChild(createEl('<p>No hay imágenes cargadas aún.</p>'));
+    document.querySelector('.gallery-carousel-container').innerHTML = '<p>No hay imágenes cargadas aún.</p>';
     return;
   }
-  galleryData.forEach(item => {
-    const card = createEl(`<article class="card">
-      <div class="media"></div>
-      <div class="card__body">
-        <p>${item.title}</p>
-      </div>
-    </article>`);
-    card.querySelector('.media').appendChild(withImgFallback(item.img, item.title));
-    grid.appendChild(card);
-  });
+
+  function showImage(index) {
+    if(!galleryData[index]) return;
+
+    mainImage.style.opacity = 0;
+    setTimeout(() => {
+        mainImage.src = galleryData[index].img;
+        mainImage.alt = galleryData[index].title;
+        caption.textContent = galleryData[index].title;
+        mainImage.style.opacity = 1;
+    }, 300);
+
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+      thumb.classList.toggle('is-active', i === index);
+    });
+    currentImageIndex = index;
+  }
+
+  // Crear miniaturas
+  galleryData.forEach((item, index) => {
+    const thumb = createEl(`<div class="thumbnail" style="background-image: url('${item.img}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
+    thumb.addEventListener('click', () => showImage(index));
+    thumbnailsContainer.appendChild(thumb);
+  });
+
+  // Eventos de las flechas
+  prevBtn.addEventListener('click', () => {
+    const newIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+    showImage(newIndex);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const newIndex = (currentImageIndex + 1) % galleryData.length;
+    showImage(newIndex);
+  });
+  
+  // Iniciar la galería
+  showImage(0);
 })();
 
 // =================================================================
