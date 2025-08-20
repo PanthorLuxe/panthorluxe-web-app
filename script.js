@@ -158,17 +158,24 @@ function withImgFallback(src, alt){
 // =================================================================
 // Lógica de la página de Galería
 // =================================================================
-(function(){
+(async function(){
   const grid = document.getElementById('galeriaGrid');
   if (!grid) return;
-  const imgs = [];
-  if (imgs.length === 0) {
+  let galleryData = [];
+  try { const res = await fetch('data/galeria.json'); galleryData = await res.json(); } catch(error) { console.error('Error al cargar galeria.json:', error); }
+
+  if (galleryData.length === 0) {
     grid.appendChild(createEl('<p>No hay imágenes cargadas aún.</p>'));
     return;
   }
-  imgs.forEach(src => {
-    const card = createEl('<article class="card"><div class="media"></div></article>');
-    card.querySelector('.media').appendChild(withImgFallback(src, 'Imagen de galería'));
+  galleryData.forEach(item => {
+    const card = createEl(`<article class="card">
+      <div class="media"></div>
+      <div class="card__body">
+        <p>${item.title}</p>
+      </div>
+    </article>`);
+    card.querySelector('.media').appendChild(withImgFallback(item.img, item.title));
     grid.appendChild(card);
   });
 })();
@@ -236,7 +243,6 @@ function withImgFallback(src, alt){
 
   const params = new URLSearchParams(window.location.search);
   const propertyId = params.get('id');
-  
   const propertyDetailDiv = document.querySelector('.property-detail');
 
   if (!propertyId) {
@@ -258,6 +264,7 @@ function withImgFallback(src, alt){
       return [...rentals, ...allProjects, ...sales];
     } catch(e) {
       console.error("Error al cargar los datos de las propiedades:", e);
+      propertyDetailDiv.innerHTML = `<h1>Error al cargar los datos.</h1><p>Por favor, revisa que los archivos .json existan en la carpeta /data/ y no tengan errores de sintaxis.</p>`;
       return [];
     }
   }
@@ -273,7 +280,7 @@ function withImgFallback(src, alt){
   document.getElementById('propertyTitle').textContent = property.title;
   const priceEl = document.getElementById('propertyPrice');
   if (property.price) {
-    const priceSuffix = property.id.includes('piso') ? ' /mes' : '';
+    const priceSuffix = property.status === 'alquilado' ? ' /mes' : '';
     priceEl.textContent = euro(property.price) + priceSuffix;
   } else {
     priceEl.style.display = 'none';
@@ -286,7 +293,7 @@ function withImgFallback(src, alt){
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   
-  const galleryImages = [property.img, ...(property.gallery_images || [])];
+  const galleryImages = [property.img, ...(property.gallery_images || [])].filter(Boolean); // Filtra por si alguna imagen es nula o vacía
   let currentImageIndex = 0;
 
   function showImage(index) {
@@ -303,23 +310,27 @@ function withImgFallback(src, alt){
     currentImageIndex = index;
   }
 
-  if (galleryImages.length > 1) { // Solo mostrar galería si hay más de una imagen
-    galleryImages.forEach((src, index) => {
-      const thumb = createEl(`<div class="thumbnail" style="background-image: url('${src}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
-      thumb.addEventListener('click', () => showImage(index));
-      thumbnailsContainer.appendChild(thumb);
-    });
-    prevBtn.addEventListener('click', () => {
-      const newIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-      showImage(newIndex);
-    });
-    nextBtn.addEventListener('click', () => {
-      const newIndex = (currentImageIndex + 1) % galleryImages.length;
-      showImage(newIndex);
-    });
-    showImage(0);
+  if (galleryImages && galleryImages.length > 0) {
+    if (galleryImages.length > 1) {
+      galleryImages.forEach((src, index) => {
+        const thumb = createEl(`<div class="thumbnail" style="background-image: url('${src}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
+        thumb.addEventListener('click', () => showImage(index));
+        thumbnailsContainer.appendChild(thumb);
+      });
+      prevBtn.addEventListener('click', () => {
+        const newIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        showImage(newIndex);
+      });
+      nextBtn.addEventListener('click', () => {
+        const newIndex = (currentImageIndex + 1) % galleryImages.length;
+        showImage(newIndex);
+      });
+      showImage(0);
+    } else {
+      mainImage.src = galleryImages[0];
+      document.querySelector('.detail-gallery').classList.add('single-image');
+    }
   } else {
-    mainImage.src = galleryImages[0] || '';
-    document.querySelector('.detail-gallery').classList.add('single-image');
+    document.querySelector('.detail-gallery').style.display = 'none';
   }
 })();
