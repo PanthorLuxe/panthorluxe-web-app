@@ -12,14 +12,24 @@ module.exports = async function (context, req) {
     return;
   }
 
+  // Ruta base donde se despliega el contenido de la web
+  // Azure establece la variable de entorno 'AZURE_WWW_ROOT' para esto.
+  // Si no existe, usamos un valor por defecto.
+  const wwwRoot = process.env.AZURE_WWW_ROOT || path.join(process.env.HOME, 'site', 'wwwroot');
+  
   try {
-    const imagesDirectory = path.join(process.env.HOME, 'site', 'wwwroot', 'img', folderName);
+    const imagesDirectory = path.join(wwwRoot, 'img', folderName);
 
-    // Verificamos si el directorio existe antes de intentar leerlo
     if (!fs.existsSync(imagesDirectory)) {
+        // CAMBIO PARA DEPURACIÓN: Devolvemos la ruta que hemos intentado buscar
         context.res = {
             status: 404,
-            body: { error: `La carpeta '${folderName}' no fue encontrada en el servidor.` }
+            body: { 
+                error: `La carpeta '${folderName}' no fue encontrada en el servidor.`,
+                debug_info: {
+                    searched_path: imagesDirectory
+                }
+            }
         };
         return;
     }
@@ -37,7 +47,6 @@ module.exports = async function (context, req) {
     };
 
   } catch (error) {
-    // CAMBIO PARA DEPURACIÓN: Devolvemos el error detallado
     context.log.error(`Error crítico al procesar la carpeta ${folderName}:`, error);
     context.res = {
       status: 500,
@@ -45,7 +54,8 @@ module.exports = async function (context, req) {
         error: "Ocurrió un error interno en el servidor.",
         debug_info: {
           message: error.message,
-          stack: error.stack
+          stack: error.stack,
+          searched_path: path.join(wwwRoot, 'img', folderName)
         }
       }
     };
