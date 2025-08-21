@@ -4,6 +4,8 @@ const path = require('path');
 module.exports = async function (context, req) {
   const folderName = req.query.folder;
 
+  // Medida de seguridad CRÍTICA:
+  // Solo permitimos nombres de carpeta simples para evitar que alguien pueda acceder a otros directorios.
   if (!folderName || !/^[a-zA-Z0-9_-]+$/.test(folderName)) {
     context.res = {
       status: 400,
@@ -32,10 +34,15 @@ module.exports = async function (context, req) {
 
     const files = fs.readdirSync(imagesDirectory);
 
-    // La URL pública no cambia, Azure es lo suficientemente listo.
+    // La URL pública ahora debe incluir /api
     const imageFiles = files
       .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file))
-      .map(file => `/img/${folderName}/${file}`);
+      .sort((a, b) => { // AÑADIDO: Ordenación numérica
+        const numA = parseInt(a.match(/^\d+/), 10);
+        const numB = parseInt(b.match(/^\d+/), 10);
+        return numA - numB;
+      })
+      .map(file => `/api/img/${folderName}/${file}`); // CORREGIDO: Ruta pública con /api
 
     context.res = {
       status: 200,

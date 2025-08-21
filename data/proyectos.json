@@ -1,5 +1,14 @@
 {
-  "terminados": [],
+  "terminados": [
+    {
+      "id": "proyecto-lavapies",
+      "title": "Rehabilitación Integral en Lavapiés",
+      "img": "/api/img/proyecto-madrid1/1.jpg",
+      "image_folder": "proyecto-madrid1",
+      "desc": "Conversión de una antigua corrala en 6 apartamentos modernos, manteniendo la fachada y elementos históricos protegidos.",
+      "long_desc": "Este proyecto consistió en la adquisición y rehabilitación completa de una corrala histórica en el multicultural barrio de Lavapiés, Madrid. El desafío fue preservar el encanto de la fachada protegida mientras se creaban 6 apartamentos modernos y funcionales en su interior. Se realizó un refuerzo estructural completo, se modernizaron todas las instalaciones y se diseñaron interiores de estilo contemporáneo que contrastan y realzan los elementos históricos conservados. El resultado es un edificio que aúna tradición y vanguardia, ofreciendo viviendas únicas en una ubicación excepcional."
+    }
+  ],
   "proceso": [
     {
       "id": "proyecto-jaen",

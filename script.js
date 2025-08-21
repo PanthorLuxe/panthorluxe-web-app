@@ -61,14 +61,7 @@ function withImgFallback(src, alt){
     slice.forEach(r => {
       const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
       const badgeText = r.status.charAt(0).toUpperCase() + r.status.slice(1);
-      const cardHTML = `<article class="card rental">
-        <div class="media"></div>
-        <div class="card__body">
-          <h3>${r.title}</h3>
-          <p>${euro(r.price)} /mes</p>
-          <span class="badge ${badgeClass}">${badgeText}</span>
-        </div>
-      </article>`;
+      const cardHTML = `<article class="card rental"><div class="media"></div><div class="card__body"><h3>${r.title}</h3><p>${euro(r.price)} /mes</p><span class="badge ${badgeClass}">${badgeText}</span></div></article>`;
       const cardLink = createEl(`<a href="detalle.html?id=${r.id}" class="card-link">${cardHTML}</a>`);
       cardLink.querySelector('.media').appendChild(withImgFallback(r.img, r.title));
       grid.appendChild(cardLink);
@@ -87,8 +80,10 @@ function withImgFallback(src, alt){
     next.addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); window.scrollTo(0,0); }});
     pagination.appendChild(next);
   }
-  form.addEventListener('submit', e=>{ e.preventDefault(); applyFilters(); });
-  form.addEventListener('change', applyFilters);
+  if (form) {
+    form.addEventListener('submit', e=>{ e.preventDefault(); applyFilters(); });
+    form.addEventListener('change', applyFilters);
+  }
   render();
 })();
 
@@ -250,7 +245,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA NUEVA PÁGINA DE DETALLE (AUTOMÁTICA)
+// LÓGICA DE LA PÁGINA DE DETALLE (AUTOMÁTICA)
 // =================================================================
 (async function() {
   const isDetailPage = document.getElementById('detailPage');
@@ -339,6 +334,7 @@ function withImgFallback(src, alt){
 
   if (galleryImages && galleryImages.length > 0) {
     if (galleryImages.length > 1) {
+      thumbnailsContainer.innerHTML = ''; // Limpiar miniaturas previas
       galleryImages.forEach((src, index) => {
         const thumb = createEl(`<div class="thumbnail" style="background-image: url('${src}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
         thumb.addEventListener('click', () => showImage(index));

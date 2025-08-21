@@ -1,10 +1,10 @@
 [
-  { "id": "galeria1", "img": "/img/carousel/4.jpg", "title": "Salón Moderno y Acogedor" },
-  { "id": "galeria2", "img": "/img/carousel/5.jpg", "title": "Cocina de Diseño Integrada" },
-  { "id": "galeria3", "img": "/img/carousel/1.jpg", "title": "Exterior de Lujo al Atardecer" },
-  { "id": "galeria4", "img": "/img/carousel/6.jpg", "title": "Dormitorio Sereno y Luminoso" },
-  { "id": "galeria5", "img": "/img/carousel/7.jpg", "title": "Baño de Estilo Spa" },
-  { "id": "galeria6", "img": "/img/carousel/2.jpg", "title": "Fachada Contemporánea" },
-  { "id": "galeria7", "img": "/img/carousel/8.jpg", "title": "Oficina en Casa Funcional" },
-  { "id": "galeria8", "img": "/img/carousel/3.jpg", "title": "Entrada a Complejo Residencial" }
+  { "id": "galeria1", "img": "/api/img/carousel/4.jpg", "title": "Salón Moderno y Acogedor" },
+  { "id": "galeria2", "img": "/api/img/carousel/5.jpg", "title": "Cocina de Diseño Integrada" },
+  { "id": "galeria3", "img": "/api/img/carousel/1.jpg", "title": "Exterior de Lujo al Atardecer" },
+  { "id": "galeria4", "img": "/api/img/carousel/6.jpg", "title": "Dormitorio Sereno y Luminoso" },
+  { "id": "galeria5", "img": "/api/img/carousel/7.jpg", "title": "Baño de Estilo Spa" },
+  { "id": "galeria6", "img": "/api/img/carousel/2.jpg", "title": "Fachada Contemporánea" },
+  { "id": "galeria7", "img": "/api/img/carousel/8.jpg", "title": "Oficina en Casa Funcional" },
+  { "id": "galeria8", "img": "/api/img/carousel/3.jpg", "title": "Entrada a Complejo Residencial" }
 ]

@@ -8,9 +8,9 @@
   --color-text-header: #222;
   --color-text-subtle: #444;
   --color-text-inverted: #bfbfbf;
-  --color-bg: #f9f9f9; /* <-- CAMBIO A BLANCO ROTO */
+  --color-bg: #f9f9f9;
   --color-bg-dark: #111;
-  --color-bg-header: rgba(249, 249, 249, .96); /* <-- Adaptado al nuevo fondo */
+  --color-bg-header: rgba(249, 249, 249, .96);
   --color-bg-active: #ebebeb; 
   --color-bg-subtle: #f2f2f2;
   --color-border: #e5e5e5;
@@ -32,7 +32,7 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 /* =========== Header (VERSIÓN DEFINITIVA CON LOGO) =========== */
 .header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--color-border);background:var(--color-bg-header);backdrop-filter:saturate(180%) blur(8px);}
 .brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
-.brand__logo { height: 32px; width: auto; } /* <-- NUEVO ESTILO PARA EL LOGO */
+.brand__logo { height: 32px; width: auto; }
 .brand__name{font-weight:800;letter-spacing:.3px;font-size:18px}
 .header__menu-container {position: relative;}
 .nav{position:absolute;top:calc(100% + 8px); right:0;background:var(--color-bg);border:1px solid var(--color-border);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:12px;display:none;flex-direction:column;min-width:220px;z-index: 101;}
@@ -101,7 +101,6 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
   text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 }
 .hero__inner .actions .btn{margin:6px}
-
 
 /* =========== Layout =========== */
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
@@ -172,38 +171,20 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 .card-link {text-decoration: none; color: inherit; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;}
 .card-link:hover {transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);}
 
-@media (max-width: 900px) {
-  .steps {grid-template-columns: 1fr;}
-}
-
-/* =========== Utilidades =========== */
-.hidden, .is-hidden {display:none !important}
-.sr-only {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;}
-/* INICIO DEL CÓDIGO COMPLETO Y DEFINITIVO DE styles.css */
-:root {
-  /* ... (todas tus variables de color y tipografía) ... */
-}
-/* ... (todas tus reglas de CSS existentes para reset, header, hero, etc.) ... */
-
-/* =========== ESTILOS PARA LA PÁGINA DE DETALLE =========== */
-/* ... (los estilos que añadimos para detalle.html) ... */
-
 /* =========== ESTILOS PARA LA PÁGINA DE GALERÍA (NUEVO) =========== */
 .gallery-carousel-container {
   max-width: 900px;
   margin: 24px auto 0;
 }
-
 .gallery-main-image-container {
   position: relative;
   width: 100%;
-  padding-top: 60%; /* Proporción 5:3, más panorámica */
+  padding-top: 60%;
   background-color: var(--color-bg-subtle);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0,0,0,.1);
 }
-
 .gallery-main-image-container img {
   position: absolute;
   top: 0;
@@ -213,7 +194,6 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
   object-fit: cover;
   transition: opacity 0.4s ease-in-out;
 }
-
 .gallery-caption {
   text-align: center;
   margin-top: 16px;
@@ -221,7 +201,6 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
   color: var(--color-text-subtle);
   min-height: 1.2em;
 }
-/* Reutilizamos los estilos de las flechas de la página de detalle */
 .gallery-main-image-container .gallery-arrow {
   position: absolute;
   top: 50%;
@@ -238,9 +217,12 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .gallery-main-image-container:hover .gallery-arrow {
   opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .steps {grid-template-columns: 1fr;}
 }
 
 /* =========== Utilidades =========== */
