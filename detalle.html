@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6MDVWV55H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-H6MDVWV55H');
+  </script>
+
   <title>Detalle de Propiedad — Panthor Luxe</title>
-  <meta name="robots" content="noindex" />   <meta charset="utf-8" />
+  <meta name="robots" content="noindex" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <link rel="icon" href="/img/logo.png" type="image/png">
-  <link rel="apple-touch-icon" href="/img/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/logo.png">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <header class="header" role="banner">
   <a class="brand" href="index.html" aria-label="Panthor Luxe — Inicio">
+    <img src="/img/logo.png" alt="Logo de Panthor Luxe" class="brand__logo">
     <span class="brand__name">Panthor Luxe</span>
   </a>
   <div class="header__menu-container">
@@ -35,11 +46,8 @@
   </div>
 </header>
 <main id="detailPage" class="section container">
-  
-  <a class="btn back-home" href="javascript:history.back()">← Volver</a>
-
+  <a class="btn back-home" href="javascript:history.back()">← Volver</a>
   <div class="property-detail">
-    
     <div class="detail-gallery">
       <div class="main-image-container">
         <img id="mainImage" src="" alt="Imagen principal de la propiedad" />
@@ -49,7 +57,6 @@
       <div id="thumbnails" class="thumbnails-container">
         </div>
     </div>
-
     <div class="property-info">
       <h1 id="propertyTitle">Cargando título...</h1>
       <p id="propertyPrice" class="price"></p>
@@ -57,9 +64,8 @@
         <p>Cargando descripción...</p>
       </div>
     </div>
-
   </div>
-  </main>
+</main>
 <footer class="footer" role="contentinfo">
   <div class="container">
     <p>© 2025 Panthor Luxe S.L.U. · Madrid · Jaén</p>
