@@ -42,7 +42,7 @@ module.exports = async function (context, req) {
         const numB = parseInt(b.match(/^\d+/), 10);
         return numA - numB;
       })
-      .map(file => `/api/img/${folderName}/${file}`); // CORREGIDO: Ruta pública con /api
+      .map(file => `/img/${folderName}/${file}`); // CORREGIDO: Ruta pública con /api
 
     context.res = {
       status: 200,
