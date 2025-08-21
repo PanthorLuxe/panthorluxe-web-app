@@ -34,7 +34,7 @@ function withImgFallback(src, alt){
   const grid = document.getElementById('rentalsGrid');
   if (!grid) return;
   let data = [];
-  try { const res = await fetch('data/alquileres.json'); data = await res.json(); } catch(e) { console.error('Error cargando alquileres:', e); data = []; }
+  try { const res = await fetch('/data/alquileres.json'); data = await res.json(); } catch(e) { console.error('Error cargando alquileres:', e); data = []; }
   const form = document.getElementById('searchForm');
   const pagination = document.getElementById('pagination');
   const PAGE_SIZE = 9;
@@ -46,7 +46,7 @@ function withImgFallback(src, alt){
     const min = parseInt(form.min.value || '0', 10);
     const max = parseInt(form.max.value || '9999999', 10);
     results = data.filter(r => {
-      const matchesQ = q ? (r.title.toLowerCase().includes(q) || r.city.toLowerCase().includes(q)) : true;
+      const matchesQ = q ? (r.title.toLowerCase().includes(q) || (r.city && r.city.toLowerCase().includes(q))) : true;
       const matchesCity = city ? r.city === city : true;
       const matchesStatus = status ? r.status === status : true;
       const matchesPrice = r.price >= min && r.price <= max;
@@ -60,7 +60,7 @@ function withImgFallback(src, alt){
     const slice = results.slice(start, start+PAGE_SIZE);
     slice.forEach(r => {
       const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
-      const badgeText = r.status==='disponible' ? 'Disponible' : (r.status==='proximo' ? 'Próximo' : 'Alquilado');
+      const badgeText = r.status.charAt(0).toUpperCase() + r.status.slice(1);
       const cardHTML = `<article class="card rental">
         <div class="media"></div>
         <div class="card__body">
@@ -76,15 +76,15 @@ function withImgFallback(src, alt){
     const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
     pagination.innerHTML = '';
     const prev = createEl(`<button class="chip"${page===1?' disabled':''}>« Anterior</button>`);
-    prev.addEventListener('click', ()=>{ if(page>1){ page--; render(); }});
+    prev.addEventListener('click', ()=>{ if(page>1){ page--; render(); window.scrollTo(0,0); }});
     pagination.appendChild(prev);
     for(let p=1;p<=totalPages;p++){
       const b = createEl(`<button class="chip${p===page?' is-active':''}">${p}</button>`);
-      b.addEventListener('click', ()=>{ page = p; render(); });
+      b.addEventListener('click', ()=>{ page = p; render(); window.scrollTo(0,0); });
       pagination.appendChild(b);
     }
     const next = createEl(`<button class="chip"${page===totalPages?' disabled':''}>Siguiente »</button>`);
-    next.addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); }});
+    next.addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); window.scrollTo(0,0); }});
     pagination.appendChild(next);
   }
   form.addEventListener('submit', e=>{ e.preventDefault(); applyFilters(); });
@@ -96,26 +96,20 @@ function withImgFallback(src, alt){
 // Lógica de la página de Proyectos
 // =================================================================
 (async function(){
-  const t = document.querySelector('.tabs');
-  if (!t) return;
-  const btns = t.querySelectorAll('.tab');
+  const container = document.querySelector('.tabs');
+  if (!container) return;
+  const btns = container.querySelectorAll('.tab');
   const listTerm = document.getElementById('proyectosTerminados');
   const listProc = document.getElementById('proyectosProceso');
   let data = { terminados: [], proceso: [] };
-  try { const res = await fetch('data/proyectos.json'); data = await res.json(); } catch(e) { console.error('Error cargando proyectos.json:', e) }
-  function renderList(container, items){
-    container.innerHTML = '';
+  try { const res = await fetch('/data/proyectos.json'); data = await res.json(); } catch(e) { console.error('Error cargando proyectos.json:', e) }
+  function renderList(grid, items){
+    grid.innerHTML = '';
     items.forEach(p => {
-      const cardHTML = `<article class="card">
-        <div class="media"></div>
-        <div class="card__body">
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-        </div>
-      </article>`;
+      const cardHTML = `<article class="card"><div class="media"></div><div class="card__body"><h3>${p.title}</h3><p>${p.desc}</p></div></article>`;
       const cardLink = createEl(`<a href="detalle.html?id=${p.id}" class="card-link">${cardHTML}</a>`);
-      cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
-      container.appendChild(cardLink);
+      cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
+      grid.appendChild(cardLink);
     });
   }
   renderList(listTerm, data.terminados);
@@ -135,18 +129,11 @@ function withImgFallback(src, alt){
   const grid = document.getElementById('salesGrid');
   if (!grid) return;
   let salesData = [];
-  try { const res = await fetch('data/ventas.json'); salesData = await res.json(); } catch(error) { console.error('Error al cargar ventas.json:', error); }
+  try { const res = await fetch('/data/ventas.json'); salesData = await res.json(); } catch(error) { console.error('Error al cargar ventas.json:', error); }
   function renderSales(){
     grid.innerHTML = '';
     salesData.forEach(p => {
-      const cardHTML = `<article class="card">
-        <div class="media"></div>
-        <div class="card__body">
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-          <p style="font-weight: bold; font-size: 1.1em; color: var(--color-primary-dark);">${euro(p.price)}</p>
-        </div>
-      </article>`;
+      const cardHTML = `<article class="card"><div class="media"></div><div class="card__body"><h3>${p.title}</h3><p>${p.desc}</p><p style="font-weight: bold; font-size: 1.1em; color: var(--color-primary-dark);">${euro(p.price)}</p></div></article>`;
       const cardLink = createEl(`<a href="detalle.html?id=${p.id}" class="card-link">${cardHTML}</a>`);
       cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
       grid.appendChild(cardLink);
@@ -161,22 +148,14 @@ function withImgFallback(src, alt){
 (async function(){
   const isGalleryPage = document.getElementById('galleryPage');
   if (!isGalleryPage) return;
-  
   const mainImage = document.getElementById('galleryMainImage');
   const caption = document.getElementById('galleryCaption');
   const thumbnailsContainer = document.getElementById('galleryThumbnails');
   const prevBtn = document.getElementById('galleryPrevBtn');
   const nextBtn = document.getElementById('galleryNextBtn');
-  
   let galleryData = [];
   let currentImageIndex = 0;
-
-  try {
-    const res = await fetch('data/galeria.json');
-    galleryData = await res.json();
-  } catch(error) {
-    console.error('Error al cargar galeria.json:', error);
-  }
+  try { const res = await fetch('/data/galeria.json'); galleryData = await res.json(); } catch(error) { console.error('Error al cargar galeria.json:', error); }
 
   if (galleryData.length === 0) {
     document.querySelector('.gallery-carousel-container').innerHTML = '<p>No hay imágenes cargadas aún.</p>';
@@ -185,7 +164,6 @@ function withImgFallback(src, alt){
 
   function showImage(index) {
     if(!galleryData[index]) return;
-
     mainImage.style.opacity = 0;
     setTimeout(() => {
         mainImage.src = galleryData[index].img;
@@ -193,37 +171,32 @@ function withImgFallback(src, alt){
         caption.textContent = galleryData[index].title;
         mainImage.style.opacity = 1;
     }, 300);
-
     document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
       thumb.classList.toggle('is-active', i === index);
     });
     currentImageIndex = index;
   }
 
-  // Crear miniaturas
   galleryData.forEach((item, index) => {
     const thumb = createEl(`<div class="thumbnail" style="background-image: url('${item.img}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
     thumb.addEventListener('click', () => showImage(index));
     thumbnailsContainer.appendChild(thumb);
   });
 
-  // Eventos de las flechas
   prevBtn.addEventListener('click', () => {
     const newIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
     showImage(newIndex);
   });
-
   nextBtn.addEventListener('click', () => {
     const newIndex = (currentImageIndex + 1) % galleryData.length;
     showImage(newIndex);
   });
   
-  // Iniciar la galería
   showImage(0);
 })();
 
 // =================================================================
-// Lógica del Formulario de Contacto (con depuración)
+// Lógica del Formulario de Contacto
 // =================================================================
 (function(){
   const form = document.getElementById('contactForm');
@@ -277,7 +250,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA NUEVA PÁGINA DE DETALLE
+// LÓGICA DE LA NUEVA PÁGINA DE DETALLE (AUTOMÁTICA)
 // =================================================================
 (async function() {
   const isDetailPage = document.getElementById('detailPage');
@@ -306,7 +279,7 @@ function withImgFallback(src, alt){
       return [...rentals, ...allProjects, ...sales];
     } catch(e) {
       console.error("Error al cargar los datos de las propiedades:", e);
-      propertyDetailDiv.innerHTML = `<h1>Error al cargar los datos.</h1><p>Por favor, revisa que los archivos .json existan en la carpeta /data/ y no tengan errores de sintaxis.</p>`;
+      propertyDetailDiv.innerHTML = `<h1>Error al cargar los datos.</h1><p>Revisa que los archivos .json existan en /data/ y no tengan errores.</p>`;
       return [];
     }
   }
@@ -334,9 +307,21 @@ function withImgFallback(src, alt){
   const thumbnailsContainer = document.getElementById('thumbnails');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  
-  const galleryImages = [property.img, ...(property.gallery_images || [])].filter(Boolean); // Filtra por si alguna imagen es nula o vacía
+  let galleryImages = [];
   let currentImageIndex = 0;
+
+  if (property.image_folder) {
+    try {
+      const res = await fetch(`/api/getImages?folder=${property.image_folder}`);
+      if (!res.ok) throw new Error(`El servidor respondió con estado ${res.status}`);
+      galleryImages = await res.json();
+    } catch (e) {
+      console.error(`Error al cargar la galería desde la API para la carpeta ${property.image_folder}`, e);
+      galleryImages = [property.img];
+    }
+  } else {
+    galleryImages = [property.img];
+  }
 
   function showImage(index) {
     if(!galleryImages[index]) return;

@@ -12,20 +12,16 @@ module.exports = async function (context, req) {
     return;
   }
 
-  // Ruta base donde se despliega el contenido de la web
-  // Azure establece la variable de entorno 'AZURE_WWW_ROOT' para esto.
-  // Si no existe, usamos un valor por defecto.
-  const wwwRoot = process.env.AZURE_WWW_ROOT || path.join(process.env.HOME, 'site', 'wwwroot');
-  
   try {
-    const imagesDirectory = path.join(wwwRoot, 'img', folderName);
+    // NUEVA RUTA: Busca las imágenes DENTRO de la propia carpeta de la API.
+    // __dirname es la ubicación actual del archivo (api/getImages)
+    const imagesDirectory = path.join(__dirname, '..', 'img', folderName);
 
     if (!fs.existsSync(imagesDirectory)) {
-        // CAMBIO PARA DEPURACIÓN: Devolvemos la ruta que hemos intentado buscar
         context.res = {
             status: 404,
             body: { 
-                error: `La carpeta '${folderName}' no fue encontrada en el servidor.`,
+                error: `La carpeta '${folderName}' no fue encontrada.`,
                 debug_info: {
                     searched_path: imagesDirectory
                 }
@@ -36,6 +32,7 @@ module.exports = async function (context, req) {
 
     const files = fs.readdirSync(imagesDirectory);
 
+    // La URL pública no cambia, Azure es lo suficientemente listo.
     const imageFiles = files
       .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file))
       .map(file => `/img/${folderName}/${file}`);
@@ -52,11 +49,7 @@ module.exports = async function (context, req) {
       status: 500,
       body: { 
         error: "Ocurrió un error interno en el servidor.",
-        debug_info: {
-          message: error.message,
-          stack: error.stack,
-          searched_path: path.join(wwwRoot, 'img', folderName)
-        }
+        debug_info: { message: error.message, stack: error.stack }
       }
     };
   }
