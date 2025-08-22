@@ -245,7 +245,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA PÁGINA DE DETALLE (CON ALERTAS DE PRUEBA)
+// LÓGICA DE LA PÁGINA DE DETALLE
 // =================================================================
 (async function() {
   const isDetailPage = document.getElementById('detailPage');
@@ -307,23 +307,12 @@ function withImgFallback(src, alt){
 
   if (property.image_folder) {
     try {
-      // INTENTAMOS CARGAR LA GALERÍA DESDE LA API
       const res = await fetch(`/api/getImages?folder=${property.image_folder}`);
       if (!res.ok) throw new Error(`El servidor respondió con estado ${res.status}`);
       
       galleryImages = await res.json();
       
-      // === INICIO DE LA PRUEBA CON ALERTA ===
-      // Si el código llega hasta aquí, todo ha ido bien.
-      alert("ÉXITO: Se cargaron " + galleryImages.length + " imágenes desde la API.");
-      // === FIN DE LA PRUEBA CON ALERTA ===
-
     } catch (e) {
-      // === INICIO DE LA PRUEBA CON ALERTA ===
-      // Si el código entra aquí, algo en el 'try' ha fallado.
-      alert("ERROR: Se ha producido un fallo al cargar la galería. Mensaje: " + e.message);
-      // === FIN DE LA PRUEBA CON ALERTA ===
-
       console.error(`Error al cargar la galería desde la API para la carpeta ${property.image_folder}`, e);
       galleryImages = [property.img]; // Plan B: usar solo la imagen de portada
     }
