@@ -6,7 +6,10 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
+  "main": "src/{index.js,functions/*.js}",
   "dependencies": {
+    "@azure/functions": "^4.0.0",
     "@sendgrid/mail": "^7.7.0"
-  }
+  },
+  "devDependencies": {}
 }
