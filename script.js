@@ -18,103 +18,103 @@ if (burger) {
 function euro(v){ return Number(v).toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
 function createEl(html){ const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
 function withImgFallback(src, alt){
-  const img = new Image();
-  img.src = src; img.alt = alt || ''; img.loading = 'lazy';
-  const wrap = document.createElement('div');
-  img.onerror = () => wrap.replaceChildren(createEl('<div class="img-fallback">Sin imagen</div>'));
-  img.onload  = () => wrap.replaceChildren(img);
-  wrap.appendChild(createEl('<div class="img-fallback">Cargando…</div>'));
-  return wrap;
+  const img = new Image();
+  img.src = src; img.alt = alt || ''; img.loading = 'lazy';
+  const wrap = document.createElement('div');
+  img.onerror = () => wrap.replaceChildren(createEl('<div class="img-fallback">Sin imagen</div>'));
+  img.onload  = () => wrap.replaceChildren(img);
+  wrap.appendChild(createEl('<div class="img-fallback">Cargando…</div>'));
+  return wrap;
 }
 
 // =================================================================
 // Lógica de la página de Alquileres
 // =================================================================
 (async function(){
-  const grid = document.getElementById('rentalsGrid');
-  if (!grid) return;
-  let data = [];
-  try { const res = await fetch('/data/alquileres.json'); data = await res.json(); } catch(e) { console.error('Error cargando alquileres:', e); data = []; }
-  const form = document.getElementById('searchForm');
-  const pagination = document.getElementById('pagination');
-  const PAGE_SIZE = 9;
-  let page = 1, results = [...data];
-  function applyFilters(){
-    const q = (form.q.value || '').toLowerCase().trim();
-    const city = form.city.value || '';
-    const status = form.status.value || '';
-    const min = parseInt(form.min.value || '0', 10);
-    const max = parseInt(form.max.value || '9999999', 10);
-    results = data.filter(r => {
-      const matchesQ = q ? (r.title.toLowerCase().includes(q) || (r.city && r.city.toLowerCase().includes(q))) : true;
-      const matchesCity = city ? r.city === city : true;
-      const matchesStatus = status ? r.status === status : true;
-      const matchesPrice = r.price >= min && r.price <= max;
-      return matchesQ && matchesCity && matchesStatus && matchesPrice;
-    });
-    page = 1; render();
-  }
-  function render(){
-    grid.innerHTML = '';
-    const start = (page-1)*PAGE_SIZE;
-    const slice = results.slice(start, start+PAGE_SIZE);
-    slice.forEach(r => {
-      const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
-      const badgeText = r.status.charAt(0).toUpperCase() + r.status.slice(1);
+  const grid = document.getElementById('rentalsGrid');
+  if (!grid) return;
+  let data = [];
+  try { const res = await fetch('/data/alquileres.json'); data = await res.json(); } catch(e) { console.error('Error cargando alquileres:', e); data = []; }
+  const form = document.getElementById('searchForm');
+  const pagination = document.getElementById('pagination');
+  const PAGE_SIZE = 9;
+  let page = 1, results = [...data];
+  function applyFilters(){
+    const q = (form.q.value || '').toLowerCase().trim();
+    const city = form.city.value || '';
+    const status = form.status.value || '';
+    const min = parseInt(form.min.value || '0', 10);
+    const max = parseInt(form.max.value || '9999999', 10);
+    results = data.filter(r => {
+      const matchesQ = q ? (r.title.toLowerCase().includes(q) || (r.city && r.city.toLowerCase().includes(q))) : true;
+      const matchesCity = city ? r.city === city : true;
+      const matchesStatus = status ? r.status === status : true;
+      const matchesPrice = r.price >= min && r.price <= max;
+      return matchesQ && matchesCity && matchesStatus && matchesPrice;
+    });
+    page = 1; render();
+  }
+  function render(){
+    grid.innerHTML = '';
+    const start = (page-1)*PAGE_SIZE;
+    const slice = results.slice(start, start+PAGE_SIZE);
+    slice.forEach(r => {
+      const badgeClass = r.status==='disponible' ? 'ok' : (r.status==='proximo' ? 'soon' : 'off');
+      const badgeText = r.status.charAt(0).toUpperCase() + r.status.slice(1);
       const cardHTML = `<article class="card rental"><div class="media"></div><div class="card__body"><h3>${r.title}</h3><p>${euro(r.price)} /mes</p><span class="badge ${badgeClass}">${badgeText}</span></div></article>`;
       const cardLink = createEl(`<a href="detalle.html?id=${r.id}" class="card-link">${cardHTML}</a>`);
-      cardLink.querySelector('.media').appendChild(withImgFallback(r.img, r.title));
-      grid.appendChild(cardLink);
-    });
-    const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
-    pagination.innerHTML = '';
-    const prev = createEl(`<button class="chip"${page===1?' disabled':''}>« Anterior</button>`);
-    prev.addEventListener('click', ()=>{ if(page>1){ page--; render(); window.scrollTo(0,0); }});
-    pagination.appendChild(prev);
-    for(let p=1;p<=totalPages;p++){
-      const b = createEl(`<button class="chip${p===page?' is-active':''}">${p}</button>`);
-      b.addEventListener('click', ()=>{ page = p; render(); window.scrollTo(0,0); });
-      pagination.appendChild(b);
-    }
-    const next = createEl(`<button class="chip"${page===totalPages?' disabled':''}>Siguiente »</button>`);
-    next.addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); window.scrollTo(0,0); }});
-    pagination.appendChild(next);
-  }
-  if (form) {
-    form.addEventListener('submit', e=>{ e.preventDefault(); applyFilters(); });
-    form.addEventListener('change', applyFilters);
+      cardLink.querySelector('.media').appendChild(withImgFallback(r.img, r.title));
+      grid.appendChild(cardLink);
+    });
+    const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+    pagination.innerHTML = '';
+    const prev = createEl(`<button class="chip"${page===1?' disabled':''}>« Anterior</button>`);
+    prev.addEventListener('click', ()=>{ if(page>1){ page--; render(); window.scrollTo(0,0); }});
+    pagination.appendChild(prev);
+    for(let p=1;p<=totalPages;p++){
+      const b = createEl(`<button class="chip${p===page?' is-active':''}">${p}</button>`);
+      b.addEventListener('click', ()=>{ page = p; render(); window.scrollTo(0,0); });
+      pagination.appendChild(b);
+    }
+    const next = createEl(`<button class="chip"${page===totalPages?' disabled':''}>Siguiente »</button>`);
+    next.addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); window.scrollTo(0,0); }});
+    pagination.appendChild(next);
   }
-  render();
+  if (form) {
+    form.addEventListener('submit', e=>{ e.preventDefault(); applyFilters(); });
+    form.addEventListener('change', applyFilters);
+  }
+  render();
 })();
 
 // =================================================================
 // Lógica de la página de Proyectos
 // =================================================================
 (async function(){
-  const container = document.querySelector('.tabs');
-  if (!container) return;
-  const btns = container.querySelectorAll('.tab');
-  const listTerm = document.getElementById('proyectosTerminados');
-  const listProc = document.getElementById('proyectosProceso');
-  let data = { terminados: [], proceso: [] };
-  try { const res = await fetch('/data/proyectos.json'); data = await res.json(); } catch(e) { console.error('Error cargando proyectos.json:', e) }
-  function renderList(grid, items){
-    grid.innerHTML = '';
-    items.forEach(p => {
+  const container = document.querySelector('.tabs');
+  if (!container) return;
+  const btns = container.querySelectorAll('.tab');
+  const listTerm = document.getElementById('proyectosTerminados');
+  const listProc = document.getElementById('proyectosProceso');
+  let data = { terminados: [], proceso: [] };
+  try { const res = await fetch('/data/proyectos.json'); data = await res.json(); } catch(e) { console.error('Error cargando proyectos.json:', e) }
+  function renderList(grid, items){
+    grid.innerHTML = '';
+    items.forEach(p => {
       const cardHTML = `<article class="card"><div class="media"></div><div class="card__body"><h3>${p.title}</h3><p>${p.desc}</p></div></article>`;
       const cardLink = createEl(`<a href="detalle.html?id=${p.id}" class="card-link">${cardHTML}</a>`);
       cardLink.querySelector('.media').appendChild(withImgFallback(p.img, p.title));
       grid.appendChild(cardLink);
-    });
-  }
-  renderList(listTerm, data.terminados);
-  renderList(listProc, data.proceso);
-  btns.forEach(b => b.addEventListener('click', () => {
-    btns.forEach(x => x.classList.remove('is-active'));
-    b.classList.add('is-active');
-    const tab = b.dataset.tab;
-    document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('is-hidden', p.dataset.panel !== tab));
-  }));
+    });
+  }
+  renderList(listTerm, data.terminados);
+  renderList(listProc, data.proceso);
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.classList.remove('is-active'));
+    b.classList.add('is-active');
+    const tab = b.dataset.tab;
+    document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('is-hidden', p.dataset.panel !== tab));
+  }));
 })();
 
 // =================================================================
@@ -141,8 +141,8 @@ function withImgFallback(src, alt){
 // Lógica de la página de Galería
 // =================================================================
 (async function(){
-  const isGalleryPage = document.getElementById('galleryPage');
-  if (!isGalleryPage) return;
+  const isGalleryPage = document.getElementById('galleryPage');
+  if (!isGalleryPage) return;
   const mainImage = document.getElementById('galleryMainImage');
   const caption = document.getElementById('galleryCaption');
   const thumbnailsContainer = document.getElementById('galleryThumbnails');
@@ -152,10 +152,10 @@ function withImgFallback(src, alt){
   let currentImageIndex = 0;
   try { const res = await fetch('/data/galeria.json'); galleryData = await res.json(); } catch(error) { console.error('Error al cargar galeria.json:', error); }
 
-  if (galleryData.length === 0) {
+  if (galleryData.length === 0) {
     document.querySelector('.gallery-carousel-container').innerHTML = '<p>No hay imágenes cargadas aún.</p>';
-    return;
-  }
+    return;
+  }
 
   function showImage(index) {
     if(!galleryData[index]) return;
@@ -194,36 +194,36 @@ function withImgFallback(src, alt){
 // Lógica del Formulario de Contacto
 // =================================================================
 (function(){
-  const form = document.getElementById('contactForm');
-  const msg  = document.getElementById('formMsg');
-  if (!form) return;
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    msg.textContent = 'Enviando...';
-    const data = Object.fromEntries(new FormData(form));
-    if (!data.nombre || !data.email || !form.querySelector('[name="acepto"]').checked) {
-      msg.textContent = 'Revisa los campos requeridos y la política de privacidad.';
-      return;
-    }
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      if (json.ok) {
-        form.reset();
-        msg.textContent = '¡Gracias! Hemos recibido tu solicitud.';
-      } else {
-        msg.textContent = 'No se pudo enviar. Intenta de nuevo más tarde.';
-        console.error('Error detallado recibido del servidor:', json.debug_info);
-      }
-    } catch (error) {
-      console.error('Error de conexión al enviar el formulario:', error);
-      msg.textContent = 'Error de conexión. Intenta de nuevo.';
-    }
-  });
+  const form = document.getElementById('contactForm');
+  const msg  = document.getElementById('formMsg');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = 'Enviando...';
+    const data = Object.fromEntries(new FormData(form));
+    if (!data.nombre || !data.email || !form.querySelector('[name="acepto"]').checked) {
+      msg.textContent = 'Revisa los campos requeridos y la política de privacidad.';
+      return;
+    }
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.ok) {
+        form.reset();
+        msg.textContent = '¡Gracias! Hemos recibido tu solicitud.';
+      } else {
+        msg.textContent = 'No se pudo enviar. Intenta de nuevo más tarde.';
+        console.error('Error detallado recibido del servidor:', json.debug_info);
+      }
+    } catch (error) {
+      console.error('Error de conexión al enviar el formulario:', error);
+      msg.textContent = 'Error de conexión. Intenta de nuevo.';
+    }
+  });
 })();
 
 // =================================================================
@@ -245,7 +245,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA PÁGINA DE DETALLE (AUTOMÁTICA)
+// LÓGICA DE LA PÁGINA DE DETALLE (AUTOMÁTICA) - VERSIÓN CORREGIDA
 // =================================================================
 (async function() {
   const isDetailPage = document.getElementById('detailPage');
@@ -302,27 +302,12 @@ function withImgFallback(src, alt){
   const thumbnailsContainer = document.getElementById('thumbnails');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  let galleryImages = [];
   let currentImageIndex = 0;
 
-  if (property.image_folder) {
-    try {
-      const res = await fetch(`/api/getImages?folder=${property.image_folder}`);
-      if (!res.ok) throw new Error(`El servidor respondió con estado ${res.status}`);
-      const imageList = await res.json();
-      // Asegurarse de que la imagen de portada (1.jpg) va primero si existe
-      galleryImages = imageList.sort((a,b) => {
-          const numA = parseInt(a.match(/(\d+)\.jpg$/)[1], 10);
-          const numB = parseInt(b.match(/(\d+)\.jpg$/)[1], 10);
-          return numA - numB;
-      });
-    } catch (e) {
-      console.error(`Error al cargar la galería desde la API para la carpeta ${property.image_folder}`, e);
-      galleryImages = [property.img];
-    }
-  } else {
-    galleryImages = [property.img];
-  }
+  // === INICIO DE LA MODIFICACIÓN ===
+  // Ya no llamamos a la API. Leemos la galería del objeto 'property' que ya tenemos.
+  const galleryImages = property.images || [property.img];
+  // === FIN DE LA MODIFICACIÓN ===
 
   function showImage(index) {
     if(!galleryImages[index]) return;

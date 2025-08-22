@@ -6,7 +6,13 @@
     "price": 1000,
     "status": "alquilado",
     "img": "/img/alquiler1/1.jpg",
-    "image_folder": "alquiler1",
+    "images": [
+      "/img/alquiler1/1.jpg",
+      "/img/alquiler1/2.jpg",
+      "/img/alquiler1/3.jpg",
+      "/img/alquiler1/4.jpg",
+      "/img/alquiler1/5.jpg"
+    ],
     "desc": "Luminoso y reformado piso en la Calle Hacienda de Pavones. Ideal para familias o profesionales, perfectamente comunicado y con todas las comodidades.",
     "long_desc": "Descubre este excepcional piso situado en el consolidado barrio de Moratalaz, en la Calle Hacienda de Pavones, 53. Esta vivienda, ahora alquilada, representa el estándar de calidad y confort de Panthor Luxe. Con una distribución inteligente y acabados modernos, ofrece un ambiente luminoso y acogedor. Su ubicación estratégica, con excelentes conexiones de transporte público y accesos a las principales vías de Madrid, junto con la proximidad a zonas verdes, colegios y comercios, lo convierte en una opción ideal para la vida urbana sin renunciar a la tranquilidad."
   }

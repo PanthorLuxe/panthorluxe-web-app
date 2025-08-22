@@ -4,7 +4,13 @@
     "title": "Casa de Pueblo con Encanto en Villardompardo, Jaén",
     "price": 130000,
     "img": "/img/venta1/1.jpg",
-    "image_folder": "venta1",
+    "images": [
+      "/img/venta1/1.jpg",
+      "/img/venta1/2.jpg",
+      "/img/venta1/3.jpg",
+      "/img/venta1/4.jpg",
+      "/img/venta1/5.jpg"
+    ],
     "desc": "Magnífica casa de pueblo de ~300m² en urbanización privada. 5 dormitorios, 3 baños, piscina, jardín y garaje.",
     "long_desc": "Descubre la paz y la amplitud en esta magnífica casa de pueblo de aproximadamente 300m², situada en una exclusiva y tranquila urbanización privada de Villardompardo (Jaén), en una calle peatonal sin salida ideal para la seguridad de tu familia. Esta propiedad es el refugio perfecto, con 5 amplios dormitorios y 3 baños completos. Disfruta de su piscina privada y su cuidado jardín, perfectos para el ocio y el descanso. La vivienda cuenta con todas las comodidades modernas, incluyendo varias terrazas, múltiples salones, un práctico lavadero, trasteros y un amplio garaje con puerta motorizada. Una oportunidad única para adquirir una propiedad excepcional con una calidad de vida inmejorable."
   }

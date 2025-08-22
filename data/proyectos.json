@@ -5,7 +5,12 @@
       "id": "proyecto-jaen",
       "title": "Apartamentos de Lujo a Pie de la Catedral",
       "img": "/img/proyecto-jaen1/1.jpg",
-      "image_folder": "proyecto-jaen1",
+      "images": [
+        "/img/proyecto-jaen1/1.jpg",
+        "/img/proyecto-jaen1/2.jpg",
+        "/img/proyecto-jaen1/3.jpg",
+        "/img/proyecto-jaen1/4.jpg"
+      ],
       "desc": "En el corazón del casco histórico de Jaén, un edificio de nueva construcción que albergará seis apartamentos de alto standing.",
       "long_desc": "En el corazón del casco histórico de Jaén, a escasos 50 metros de la majestuosa Catedral, nace un proyecto emblemático destinado a redefinir el concepto de lujo y exclusividad. Sobre la base de un edificio con historia, Panthor Luxe está llevando a cabo una transformación integral para crear 'Apartamentos de Lujo a Pie de la Catedral'. El proyecto contempla la demolición completa de la estructura preexistente para dar vida a un edificio de nueva construcción que albergará seis apartamentos de alto standing en la Calle Príncipe Alfonso 9. La exclusividad se extiende a sus servicios, con dos sótanos y una entreplanta destinados a un garaje privado, garantizando accesibilidad total y un servicio de cortesía para los residentes."
     }

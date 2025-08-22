@@ -1,14 +1,21 @@
 {
   "navigationFallback": {
-    "rewrite": "/index.html"
+    "rewrite": "/index.html",
+    "exclude": [ "/img/*", "/api/*" ]
   },
+  "routes": [
+    {
+      "route": "/api/*",
+      "methods": ["GET", "POST"],
+      "rewrite": "/api/*"
+    }
+  ],
   "responseOverrides": {
     "404": {
-      "rewrite": "/index.html",
-      "statusCode": 301
+      "rewrite": "/index.html"
     }
   },
   "globalHeaders": {
-    "Content-Security-Policy": "default-src https: 'unsafe-inline'; object-src 'none';"
+    "Content-Security-Policy": "default-src 'self' https: data: 'unsafe-inline'; object-src 'none';"
   }
 }
