@@ -9,7 +9,7 @@
   "main": "src/{index.js,functions/*.js}",
   "dependencies": {
     "@azure/functions": "^4.0.0",
+    "@azure/storage-blob": "^12.28.0",
     "@sendgrid/mail": "^7.7.0"
-  },
-  "devDependencies": {}
+  }
 }
