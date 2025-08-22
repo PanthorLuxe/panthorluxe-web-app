@@ -1,23 +1,14 @@
 {
-  "routes": [
-    {
-      "route": "/api/*",
-      "allowedRoles": [
-        "anonymous"
-      ]
-    }
-  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  },
   "responseOverrides": {
     "404": {
-      "rewrite": "/index.html"
+      "rewrite": "/index.html",
+      "statusCode": 301
     }
   },
   "globalHeaders": {
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
-  },
-  "mimeTypes": {
-    ".webmanifest": "application/manifest+json"
+    "Content-Security-Policy": "default-src https: 'unsafe-inline'; object-src 'none';"
   }
 }

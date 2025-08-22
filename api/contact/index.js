@@ -1,14 +1,17 @@
 const sgMail = require('@sendgrid/mail');
-
+    
 module.exports = async function (context, req) {
   context.res = { status: 500, body: { ok: false, error: "Error procesando la solicitud." } };
 
   const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+  if (!SENDGRID_API_KEY) {
+    return context.res = { status: 500, body: { ok: false, error: "La configuración del servidor de correo no está completa." } };
+  }
   sgMail.setApiKey(SENDGRID_API_KEY);
 
   const data = req.body;
 
-  if (!data.nombre || !data.email || !data.acepto) {
+  if (!data || !data.nombre || !data.email || !data.acepto) {
     context.res = { status: 400, body: { ok: false, error: "Faltan campos requeridos." } };
     return;
   }
@@ -28,7 +31,7 @@ module.exports = async function (context, req) {
 
   const msg = {
     to: 'info@panthorluxe.com',
-    from: 'info@panthorluxe.com',
+    from: 'info@panthorluxe.com', // Debe ser un remitente verificado en SendGrid
     subject: `Nuevo Contacto Web de ${data.nombre}`,
     text: emailBody,
   };
@@ -37,18 +40,8 @@ module.exports = async function (context, req) {
     await sgMail.send(msg);
     context.res = { status: 200, body: { ok: true } };
   } catch (error) {
-    // CAMBIO PARA DEPURACIÓN: Devolvemos el error detallado
     context.log.error('Error al enviar con SendGrid:', error);
-    context.res = {
-      status: 500,
-      body: {
-        ok: false,
-        error: "Hubo un error en el servidor.", // Mensaje genérico para el usuario
-        debug_info: { // Información detallada para nosotros
-          message: error.message,
-          response_body: error.response ? error.response.body : "No response body"
-        }
-      }
-    };
+    if (error.response) { context.log.error(error.response.body); }
+    context.res = { status: 500, body: { ok: false, error: "No se pudo enviar el email." } };
   }
 };

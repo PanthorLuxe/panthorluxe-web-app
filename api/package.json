@@ -1,7 +1,11 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "Azure Functions for Panthor Luxe contact form.",
+  "description": "Azure Functions for Panthor Luxe",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0"
   }

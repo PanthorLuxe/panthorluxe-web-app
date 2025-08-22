@@ -309,7 +309,13 @@ function withImgFallback(src, alt){
     try {
       const res = await fetch(`/api/getImages?folder=${property.image_folder}`);
       if (!res.ok) throw new Error(`El servidor respondió con estado ${res.status}`);
-      galleryImages = await res.json();
+      const imageList = await res.json();
+      // Asegurarse de que la imagen de portada (1.jpg) va primero si existe
+      galleryImages = imageList.sort((a,b) => {
+          const numA = parseInt(a.match(/(\d+)\.jpg$/)[1], 10);
+          const numB = parseInt(b.match(/(\d+)\.jpg$/)[1], 10);
+          return numA - numB;
+      });
     } catch (e) {
       console.error(`Error al cargar la galería desde la API para la carpeta ${property.image_folder}`, e);
       galleryImages = [property.img];
@@ -334,7 +340,7 @@ function withImgFallback(src, alt){
 
   if (galleryImages && galleryImages.length > 0) {
     if (galleryImages.length > 1) {
-      thumbnailsContainer.innerHTML = ''; // Limpiar miniaturas previas
+      thumbnailsContainer.innerHTML = '';
       galleryImages.forEach((src, index) => {
         const thumb = createEl(`<div class="thumbnail" style="background-image: url('${src}')" role="button" aria-label="Ver imagen ${index + 1}"></div>`);
         thumb.addEventListener('click', () => showImage(index));
