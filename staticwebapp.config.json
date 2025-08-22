@@ -6,10 +6,12 @@
   "routes": [
     {
       "route": "/api/*",
-      "methods": ["GET", "POST"],
-      "rewrite": "/api/*"
+      "methods": ["GET", "POST"]
     }
   ],
+  "platform": {
+    "apiRuntime": "node:20"
+  },
   "responseOverrides": {
     "404": {
       "rewrite": "/index.html"
