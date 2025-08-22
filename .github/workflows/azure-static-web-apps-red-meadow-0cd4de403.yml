@@ -31,10 +31,6 @@ jobs:
           output_location: ""
           app_build_command: 'echo "No build required"'
           # ###### End of Repository/Build Configurations ######
-        env: # <--- INICIO DE LA MODIFICACIÓN
-          PREVIEW_PULL_REQUEST_PULL_REQUEST_TITLE: "Preview Environment"
-          NODE_VERSION: "20"
-        # <--- FIN DE LA MODIFICACIÓN
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
