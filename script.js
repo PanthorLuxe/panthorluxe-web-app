@@ -245,7 +245,7 @@ function withImgFallback(src, alt){
 })();
 
 // =================================================================
-// LÓGICA DE LA PÁGINA DE DETALLE (AUTOMÁTICA) - VERSIÓN CORREGIDA
+// LÓGICA DE LA PÁGINA DE DETALLE (CON ALERTAS DE PRUEBA)
 // =================================================================
 (async function() {
   const isDetailPage = document.getElementById('detailPage');
@@ -274,7 +274,7 @@ function withImgFallback(src, alt){
       return [...rentals, ...allProjects, ...sales];
     } catch(e) {
       console.error("Error al cargar los datos de las propiedades:", e);
-      propertyDetailDiv.innerHTML = `<h1>Error al cargar los datos.</h1><p>Revisa que los archivos .json existan en /data/ y no tengan errores.</p>`;
+      propertyDetailDiv.innerHTML = `<h1>Error al cargar los datos.</h1>`;
       return [];
     }
   }
@@ -283,7 +283,7 @@ function withImgFallback(src, alt){
   const property = allData.find(item => item.id === propertyId);
 
   if (!property) {
-    propertyDetailDiv.innerHTML = `<h1>Error: Propiedad con ID "${propertyId}" no encontrada.</h1>`;
+    propertyDetailDiv.innerHTML = `<h1>Error: Propiedad no encontrada.</h1>`;
     return;
   }
   
@@ -302,12 +302,34 @@ function withImgFallback(src, alt){
   const thumbnailsContainer = document.getElementById('thumbnails');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
+  let galleryImages = [];
   let currentImageIndex = 0;
 
-  // === INICIO DE LA MODIFICACIÓN ===
-  // Ya no llamamos a la API. Leemos la galería del objeto 'property' que ya tenemos.
-  const galleryImages = property.images || [property.img];
-  // === FIN DE LA MODIFICACIÓN ===
+  if (property.image_folder) {
+    try {
+      // INTENTAMOS CARGAR LA GALERÍA DESDE LA API
+      const res = await fetch(`/api/getImages?folder=${property.image_folder}`);
+      if (!res.ok) throw new Error(`El servidor respondió con estado ${res.status}`);
+      
+      galleryImages = await res.json();
+      
+      // === INICIO DE LA PRUEBA CON ALERTA ===
+      // Si el código llega hasta aquí, todo ha ido bien.
+      alert("ÉXITO: Se cargaron " + galleryImages.length + " imágenes desde la API.");
+      // === FIN DE LA PRUEBA CON ALERTA ===
+
+    } catch (e) {
+      // === INICIO DE LA PRUEBA CON ALERTA ===
+      // Si el código entra aquí, algo en el 'try' ha fallado.
+      alert("ERROR: Se ha producido un fallo al cargar la galería. Mensaje: " + e.message);
+      // === FIN DE LA PRUEBA CON ALERTA ===
+
+      console.error(`Error al cargar la galería desde la API para la carpeta ${property.image_folder}`, e);
+      galleryImages = [property.img]; // Plan B: usar solo la imagen de portada
+    }
+  } else {
+    galleryImages = [property.img];
+  }
 
   function showImage(index) {
     if(!galleryImages[index]) return;
