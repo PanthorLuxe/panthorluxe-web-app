@@ -186,3 +186,31 @@ body{margin:0;font-family:var(--font-family-base);color:var(--color-text);backgr
 /* =========== Utilidades =========== */
 .hidden, .is-hidden {display:none !important}
 .sr-only {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;}
+/* =========== ESTILOS PARA LA ANIMACIÓN DE CARGA =========== */
+.loader-container {
+  display: grid;
+  place-items: center;
+  min-height: 250px; /* Altura mínima para que el loader se vea bien */
+  width: 100%;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--color-border);
+  border-bottom-color: var(--color-primary);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* FIN DEL CÓDIGO COMPLETO Y DEFINITIVO DE styles.css */

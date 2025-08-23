@@ -71,8 +71,16 @@
       <button class="chip tab" role="tab" aria-selected="false" data-tab="proceso">En proceso</button>
     </div>
   </header>
-  <div id="proyectosTerminados" class="cards" data-panel="terminados"></div>
-  <div id="proyectosProceso" class="cards is-hidden" data-panel="proceso"></div>
+  <div id="proyectosTerminados" class="cards" data-panel="terminados">
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+  </div>
+  <div id="proyectosProceso" class="cards is-hidden" data-panel="proceso">
+      <div class="loader-container">
+          <div class="loader"></div>
+        </div>
+  </div>
 </main>
 <footer class="footer" role="contentinfo">
   <div class="container">
