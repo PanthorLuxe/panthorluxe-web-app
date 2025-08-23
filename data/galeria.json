@@ -1,10 +1,10 @@
 [
-  { "id": "galeria1", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/4.jpg", "title": "Salón Moderno y Acogedor" },
-  { "id": "galeria2", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/5.jpg", "title": "Cocina de Diseño Integrada" },
-  { "id": "galeria3", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/1.jpg", "title": "Exterior de Lujo al Atardecer" },
-  { "id": "galeria4", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/6.jpg", "title": "Dormitorio Sereno y Luminoso" },
-  { "id": "galeria5", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/7.jpg", "title": "Baño de Estilo Spa" },
-  { "id": "galeria6", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/2.jpg", "title": "Fachada Contemporánea" },
-  { "id": "galeria7", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/8.jpg", "title": "Oficina en Casa Funcional" },
-  { "id": "galeria8", "img": "https://panthorluxestorage001.blob.core.windows.net/images/carousel/3.jpg", "title": "Entrada a Complejo Residencial" }
+  { "id": "galeria1", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/4.jpg", "title": "Salón Moderno y Acogedor" },
+  { "id": "galeria2", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/5.jpg", "title": "Cocina de Diseño Integrada" },
+  { "id": "galeria3", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/1.jpg", "title": "Exterior de Lujo al Atardecer" },
+  { "id": "galeria4", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/6.jpg", "title": "Dormitorio Sereno y Luminoso" },
+  { "id": "galeria5", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/7.jpg", "title": "Baño de Estilo Spa" },
+  { "id": "galeria6", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/2.jpg", "title": "Fachada Contemporánea" },
+  { "id": "galeria7", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/8.jpg", "title": "Oficina en Casa Funcional" },
+  { "id": "galeria8", "img": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/carousel/3.jpg", "title": "Entrada a Complejo Residencial" }
 ]

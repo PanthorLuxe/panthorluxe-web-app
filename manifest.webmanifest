@@ -8,12 +8,12 @@
   "theme_color": "#1a1a1a",
   "icons": [
     {
-      "src": "https://panthorluxestorage001.blob.core.windows.net/images/logo.png",
+      "src": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://panthorluxestorage001.blob.core.windows.net/images/logo.png",
+      "src": "https://panthorluxe-cdn-c0bxgagbfwe8h8hu.z01.azurefd.net/images/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
