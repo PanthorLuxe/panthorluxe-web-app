@@ -1,19 +1,19 @@
 {
   "name": "Panthor Luxe",
   "short_name": "PanthorLuxe",
-  "description": "Inmobiliaria digital especializada en alquiler seguro y proyectos de inversión.",
+  "description": "Gestión de alquiler integral e inversión inmobiliaria en Madrid y Jaén.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f9f9f9",
-  "theme_color": "#c9a44f",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
   "icons": [
     {
-      "src": "/img/logo.png",
+      "src": "https://panthorluxestorage001.blob.core.windows.net/images/logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/img/logo.png",
+      "src": "https://panthorluxestorage001.blob.core.windows.net/images/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
