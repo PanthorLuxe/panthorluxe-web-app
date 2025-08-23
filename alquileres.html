@@ -9,23 +9,23 @@
     gtag('config', 'G-H6MDVWV55H');
   </script>
 
-  <title>Alquileres — Panthor Luxe</title>
-  <meta name="description" content="Catálogo de alquileres disponibles, próximos y alquilados en Madrid y Jaén." />
-  <link rel="canonical" href="https://www.panthorluxe.com/alquileres.html" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alquileres — Panthor Luxe</title>
+  <meta name="description" content="Catálogo de alquileres disponibles, próximos y alquilados en Madrid y Jaén." />
+  <link rel="canonical" href="https://www.panthorluxe.com/alquileres.html" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.panthorluxe.com/alquileres.html">
   <meta property="og:title" content="Catálogo de Alquileres — Panthor Luxe">
   <meta property="og:description" content="Explora nuestro catálogo de alquileres disponibles, próximos y gestionados en Madrid y Jaén.">
-  <meta property="og:image" content="https://www.panthorluxe.com/img/social-share.jpg">
+  <meta property="og:image" content="https://panthorluxestorage001.blob.core.windows.net/images/social-share.jpg">
   <meta property="twitter:card" content="summary_large_image">
   
-  <link rel="icon" href="/img/logo.png" type="image/png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/logo.png">
+  <link rel="icon" href="https://panthorluxestorage001.blob.core.windows.net/images/logo.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://panthorluxestorage001.blob.core.windows.net/images/logo.png">
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,7 +40,7 @@
 <body>
 <header class="header" role="banner">
   <a class="brand" href="index.html" aria-label="Panthor Luxe — Inicio">
-    <img src="/img/logo.png" alt="Logo de Panthor Luxe" class="brand__logo">
+    <img src="https://panthorluxestorage001.blob.core.windows.net/images/logo.png" alt="Logo de Panthor Luxe" class="brand__logo">
     <span class="brand__name">Panthor Luxe</span>
   </a>
   <div class="header__menu-container">
@@ -63,54 +63,54 @@
   </div>
 </header>
 <main class="section container">
-  <a class="btn back-home" href="index.html">← Volver a inicio</a>
-  <header class="section-head">
-    <h1>Alquileres</h1>
-    <p class="lead">Filtra por ciudad, estado o precio.</p>
-  </header>
-  <form id="searchForm" class="form">
-    <div class="grid grid--2">
+  <a class="btn back-home" href="index.html">← Volver a inicio</a>
+  <header class="section-head">
+    <h1>Alquileres</h1>
+    <p class="lead">Filtra por ciudad, estado o precio.</p>
+  </header>
+  <form id="searchForm" class="form">
+    <div class="grid grid--2">
       <div>
         <label for="searchQuery" class="sr-only">Buscar por título o ciudad</label>
-        <input id="searchQuery" type="search" name="q" placeholder="Buscar (título o ciudad)" />
+        <input id="searchQuery" type="search" name="q" placeholder="Buscar (título o ciudad)" />
       </div>
       <div>
         <label for="cityFilter" class="sr-only">Filtrar por ciudad</label>
-        <select id="cityFilter" name="city">
-          <option value="">Ciudad (todas)</option>
-          <option value="Madrid">Madrid</option>
-          <option value="Jaén">Jaén</option>
-        </select>
+        <select id="cityFilter" name="city">
+          <option value="">Ciudad (todas)</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Jaén">Jaén</option>
+        </select>
       </div>
       <div>
         <label for="statusFilter" class="sr-only">Filtrar por estado</label>
-        <select id="statusFilter" name="status">
-          <option value="">Estado (todos)</option>
-          <option value="disponible">Disponibles</option>
-          <option value="proximo">Próximos</option>
-          <option value="alquilado">Alquilados</option>
-        </select>
+        <select id="statusFilter" name="status">
+          <option value="">Estado (todos)</option>
+          <option value="disponible">Disponibles</option>
+          <option value="proximo">Próximos</option>
+          <option value="alquilado">Alquilados</option>
+        </select>
       </div>
-      <div class="grid grid--2">
+      <div class="grid grid--2">
         <div>
           <label for="minPrice" class="sr-only">Precio mínimo</label>
-          <input id="minPrice" type="number" name="min" placeholder="€ mínimo" min="0" step="50" />
+          <input id="minPrice" type="number" name="min" placeholder="€ mínimo" min="0" step="50" />
         </div>
         <div>
           <label for="maxPrice" class="sr-only">Precio máximo</label>
-          <input id="maxPrice" type="number" name="max" placeholder="€ máximo" min="0" step="50" />
+          <input id="maxPrice" type="number" name="max" placeholder="€ máximo" min="0" step="50" />
         </div>
-      </div>
-    </div>
-    <button class="btn" type="submit">Buscar</button>
-  </form>
-  <div id="rentalsGrid" class="cards"></div>
-  <div id="pagination" class="chips"></div>
+      </div>
+    </div>
+    <button class="btn" type="submit">Buscar</button>
+  </form>
+  <div id="rentalsGrid" class="cards"></div>
+  <div id="pagination" class="chips"></div>
 </main>
 <footer class="footer" role="contentinfo">
-  <div class="container">
-    <p>© 2025 Panthor Luxe S.L.U. · Madrid · Jaén</p>
-  </div>
+  <div class="container">
+    <p>© 2025 Panthor Luxe S.L.U. · Madrid · Jaén</p>
+  </div>
 </footer>
 <script src="script.js"></script>
 </body>
